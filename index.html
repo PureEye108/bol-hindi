@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bol Hindi - Interactive Spoken Hindi Learning Lab</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Devanagari -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rozha+One&family=Yantramanav:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .font-hindi {
+            font-family: 'Yantramanav', sans-serif;
+        }
+        .playing-border {
+            border-color: #f59e0b !important;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25) !important;
+        }
+        /* Custom scrollbar for horizontal pills */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-white text-xl shadow-md shadow-orange-500/20 font-bold">
+                    हिं
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+                        Bol Hindi <span class="text-xs bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded-full border border-amber-200">Local Lab</span>
+                    </h1>
+                    <p class="text-xs text-slate-500">Step-by-step Spoken Hindi with Speech Checker & Audio</p>
+                </div>
+            </div>
+
+            <!-- Global Quick Audio Setting -->
+            <div class="hidden sm:flex items-center gap-3 text-xs text-slate-600 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+                <div class="flex items-center gap-1.5">
+                    <span>⚡ Speed:</span>
+                    <select id="speedSelect" class="bg-transparent font-semibold text-slate-800 focus:outline-hidden cursor-pointer">
+                        <option value="1.0" selected>1.0x Normal</option>
+                        <option value="0.75">0.75x Slow</option>
+                        <option value="0.5">0.5x Very Slow</option>
+                    </select>
+                </div>
+                <div class="h-3 w-px bg-slate-300"></div>
+                <div class="flex items-center gap-1.5">
+                    <span>🎙️ Voice:</span>
+                    <select id="voiceSelect" class="bg-transparent font-semibold text-slate-800 max-w-[140px] truncate focus:outline-hidden cursor-pointer">
+                        <option value="">Hindi (Auto)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracker Banner -->
+        <div class="bg-amber-500/10 border-t border-amber-500/20 px-4 py-2">
+            <div class="max-w-6xl mx-auto flex items-center justify-between text-xs">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-amber-900">Your Progress:</span>
+                    <span class="text-slate-700"><span id="stat-mastered-count" class="font-bold text-amber-700">0</span> / <span id="stat-total-count" class="font-semibold">0</span> phrases mastered</span>
+                    <span id="stat-percent" class="font-bold text-amber-800 bg-white px-2 py-0.5 rounded-full border border-amber-200 text-[11px]">0%</span>
+                </div>
+                <div class="w-32 sm:w-48 bg-amber-200 h-2 rounded-full overflow-hidden">
+                    <div id="progress-bar-fill" class="bg-amber-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nav Tabs -->
+        <div class="max-w-6xl mx-auto px-4 flex gap-8 border-t border-slate-100">
+            <button id="tab-btn-phrases" onclick="app.switchView('phrases')" class="nav-tab py-3 text-sm text-amber-600 border-b-2 border-amber-600 font-bold flex items-center gap-2">
+                <span>📖</span> Step-by-Step Phrases
+            </button>
+            <button id="tab-btn-quiz" onclick="app.switchView('quiz')" class="nav-tab py-3 text-sm text-slate-500 hover:text-slate-800 transition-colors flex items-center gap-2">
+                <span>🎯</span> Interactive Quiz
+            </button>
+            <button id="tab-btn-alphabet" onclick="app.switchView('alphabet')" class="nav-tab py-3 text-sm text-slate-500 hover:text-slate-800 transition-colors flex items-center gap-2">
+                <span>🔤</span> Latin ↔ Devanagari Guide
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-6xl w-full mx-auto px-4 py-6 flex-1">
+
+        <!-- VIEW 1: STEP-BY-STEP PHRASES -->
+        <section id="view-phrases" class="tab-view">
+            <!-- Search & Filter Controls -->
+            <div class="flex flex-col sm:flex-row gap-3 items-center justify-between mb-6">
+                <div class="relative w-full sm:w-80">
+                    <input id="search-input" type="text" placeholder="Search Latin, Hindi, or English..." class="w-full pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 shadow-2xs">
+                    <span class="absolute left-3 top-3 text-slate-400 text-sm">🔍</span>
+                </div>
+                <div class="text-xs text-slate-500 text-center sm:text-right">
+                    💡 <em>Click <strong>Listen</strong> for audio, and <strong>Speak to Check</strong> to test your voice!</em>
+                </div>
+            </div>
+
+            <!-- Category Pills Bar (Horizontal Scrollable) -->
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-6" id="category-pills">
+                <!-- Populated dynamically by app.js -->
+            </div>
+
+            <!-- Phrases Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="phrases-grid">
+                <!-- Populated dynamically by app.js -->
+            </div>
+        </section>
+
+        <!-- VIEW 2: INTERACTIVE QUIZ & PRACTICE -->
+        <section id="view-quiz" class="tab-view hidden">
+            <div class="max-w-xl mx-auto">
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8" id="quiz-card-content">
+                    <!-- Populated dynamically by app.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: ALPHABET & TRANSLITERATION GUIDE -->
+        <section id="view-alphabet" class="tab-view hidden">
+            <div class="space-y-8">
+                <!-- Info Banner -->
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5">
+                    <h2 class="text-lg font-bold text-amber-900 mb-1">Devanagari Script & Latin Transliteration Guide</h2>
+                    <p class="text-xs sm:text-sm text-amber-800 leading-relaxed">
+                        Hindi is written in <strong>Devanagari</strong>, a phonetic script where letters directly represent sounds.
+                        Below is the mapping between the <strong>Latin alphabet</strong> and Devanagari letters.
+                        <strong>Click any letter card to hear how it sounds!</strong>
+                    </p>
+                </div>
+
+                <!-- Vowels (Swar) -->
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <span>स्वर (Vowels)</span>
+                        <span class="text-xs font-normal text-slate-500">12 Primary Vowels</span>
+                    </h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" id="alphabet-vowels">
+                        <!-- Populated dynamically by app.js -->
+                    </div>
+                </div>
+
+                <!-- Consonants (Vyanjan) -->
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <span>व्यंजन (Consonants)</span>
+                        <span class="text-xs font-normal text-slate-500">Common Consonants</span>
+                    </h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" id="alphabet-consonants">
+                        <!-- Populated dynamically by app.js -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-400">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>Built locally with open Hindi datasets, Web Speech API & native audio recordings.</p>
+            <p class="text-slate-500 font-medium">Free & Offline-ready • Runs directly on your computer</p>
+        </div>
+    </footer>
+
+    <!-- App Data and Controller Scripts -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
