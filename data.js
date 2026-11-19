@@ -1,5 +1,5 @@
 // Comprehensive Hindi Learning Dataset
-// Step-by-step phrases with Devanagari script, Latin transliteration (Hinglish), English meaning, and phonetic breakdown.
+// Step-by-step phrases, full dialogues/conversations, Devanagari script, Latin transliteration (Hinglish), and phonetic breakdowns.
 
 const HINDI_DATA = {
     alphabet: {
@@ -90,7 +90,7 @@ const HINDI_DATA = {
             latin: "Shukriya",
             phonetic: "shook-ree-yah",
             english: "Thank you (Common / Conversational)",
-            notes: "Extremely common in day-to-day spoken Hindi (Hinglish/Urdu origin).",
+            notes: "Extremely common in day-to-day spoken Hindi.",
             audioFile: null
         },
         {
@@ -110,7 +110,7 @@ const HINDI_DATA = {
             latin: "Alvida",
             phonetic: "uhl-vee-daa",
             english: "Goodbye / Farewell",
-            notes: "People also often say 'Phir milenge' (See you again).",
+            notes: "Often people also say 'Phir milenge' (See you again).",
             audioFile: null
         },
         {
@@ -120,7 +120,7 @@ const HINDI_DATA = {
             latin: "Phir milenge",
             phonetic: "feer mee-leng-ay",
             english: "See you again",
-            notes: "The most natural and warm way to say goodbye to friends or colleagues.",
+            notes: "The most natural and warm way to say goodbye.",
             audioFile: null
         },
         {
@@ -160,7 +160,7 @@ const HINDI_DATA = {
             latin: "Koi baat nahi",
             phonetic: "koy baat nuh-hee",
             english: "No problem / It doesn't matter",
-            notes: "Equivalent to 'You're welcome' or 'Don't worry about it'.",
+            notes: "Equivalent to 'You are welcome' or 'Don't worry about it'.",
             audioFile: null
         },
 
@@ -182,7 +182,7 @@ const HINDI_DATA = {
             latin: "Mera naam ... hai",
             phonetic: "may-rah naam ... hai",
             english: "My name is ...",
-            notes: "Replace the dots with your name, e.g., 'Mera naam John hai'.",
+            notes: "E.g., 'Mera naam John hai'.",
             audioFile: null
         },
         {
@@ -294,7 +294,7 @@ const HINDI_DATA = {
             latin: "Chalo chalein",
             phonetic: "chuh-lo chuh-lay",
             english: "Let's go",
-            notes: "Encouraging a group or companion to start moving.",
+            notes: "Encouraging a companion to move.",
             audioFile: "audio/phrases_7.wav"
         },
         {
@@ -500,7 +500,7 @@ const HINDI_DATA = {
             audioFile: null
         },
 
-        // --- LEVEL 5: DIRECTIONS & ASKING FOR HELP ---
+        // --- LEVEL 5: DIRECTIONS & HELP ---
         {
             id: "dir-1",
             category: "directions",
@@ -734,7 +734,7 @@ const HINDI_DATA = {
             latin: "Badi behen / Didi",
             phonetic: "buh-dee beh-hun",
             english: "Older sister",
-            notes: "Older sister is affectionately and respectfully addressed as 'Didi'.",
+            notes: "Older sister is affectionately addressed as 'Didi'.",
             audioFile: "audio/family_eldersister.wav"
         },
         {
@@ -872,12 +872,283 @@ const HINDI_DATA = {
         {
             id: "col-gray",
             category: "colors",
-            devanagari: "स्लेटी / धूसर",
-            latin: "Sleti / Dhoosar",
+            devanagari: "स्लेटी",
+            latin: "Sleti",
             phonetic: "slay-tee",
             english: "Gray",
             notes: "Color gray.",
             audioFile: "audio/color_gray.wav"
+        }
+    ],
+
+    // --- LONG CONVERSATIONS & REAL DIALOGUES ---
+    conversations: [
+        {
+            id: "conv-chai",
+            title: "Meeting a Friend at a Chai Stall",
+            hindiTitle: "दोस्त से मिलना और चाय पीना",
+            description: "A friendly, warm everyday catchup between two close friends meeting at an Indian tea corner.",
+            icon: "☕",
+            dialogues: [
+                {
+                    speaker: "Rahul",
+                    avatar: "👨‍🦱",
+                    devanagari: "नमस्ते अमित! कैसे हो भाई?",
+                    latin: "Namaste Amit! Kaise ho bhai?",
+                    phonetic: "nuh-muh-stay uh-mit! kye-say ho bhaa-ee?",
+                    english: "Hello Amit! How are you brother?"
+                },
+                {
+                    speaker: "Amit",
+                    avatar: "🧑",
+                    devanagari: "अरे राहुल! मैं बिल्कुल ठीक हूँ। तुम कैसे हो?",
+                    latin: "Are Rahul! Main bilkul theek hoon. Tum kaise ho?",
+                    phonetic: "uh-ray raa-hool! main bil-kool theek hoon. toom kye-say ho?",
+                    english: "Hey Rahul! I am totally fine. How are you?"
+                },
+                {
+                    speaker: "Rahul",
+                    avatar: "👨‍🦱",
+                    devanagari: "सब बढ़िया। बहुत दिन बाद मिले!",
+                    latin: "Sab badhiya. Bahut din baad mile!",
+                    phonetic: "sub budh-ee-yaa. buh-hoot din baad mee-lay!",
+                    english: "Everything is great. We met after such a long time!"
+                },
+                {
+                    speaker: "Amit",
+                    avatar: "🧑",
+                    devanagari: "हाँ यार! चलो एक-एक गर्म चाय पीते हैं।",
+                    latin: "Haan yaar! Chalo ek-ek garam chai peete hain.",
+                    phonetic: "haan yaar! chuh-lo ayk ayk guh-rum chaay pee-tay hain.",
+                    english: "Yes buddy! Let's drink a cup of hot chai each."
+                },
+                {
+                    speaker: "Rahul",
+                    avatar: "👨‍🦱",
+                    devanagari: "भैया, दो कड़क मसाला चाय देना, कम चीनी के साथ।",
+                    latin: "Bhaiya, do kadak masala chai dena, kam cheeni ke saath.",
+                    phonetic: "bhaa-ee-yaa, doh kuh-duk muh-saa-laa chaay day-naa, kum chee-nee kay saath.",
+                    english: "Brother, give two strong masala teas, with less sugar."
+                },
+                {
+                    speaker: "Tea Vendor",
+                    avatar: "👳",
+                    devanagari: "हाँ साहब, अभी दो मिनट में ताज़ा चाय बनाता हूँ।",
+                    latin: "Haan sahab, abhi do minute mein taaza chai banata hoon.",
+                    phonetic: "haan saa-hub, uh-bhee doh mi-nut mayn taa-zaa chaay buh-naa-taa hoon.",
+                    english: "Yes sir, making fresh tea in just two minutes."
+                },
+                {
+                    speaker: "Amit",
+                    avatar: "🧑",
+                    devanagari: "और बताओ, तुम्हारा नया काम कैसा चल रहा है?",
+                    latin: "Aur batao, tumhara naya kaam kaisa chal raha hai?",
+                    phonetic: "owr buh-taa-o, toom-haa-raa nuh-yaa kaam kye-saa chul ruh-haa hai?",
+                    english: "Tell me more, how is your new work going?"
+                },
+                {
+                    speaker: "Rahul",
+                    avatar: "👨‍🦱",
+                    devanagari: "काफ़ी व्यस्त रहता हूँ, लेकिन सब बहुत अच्छा चल रहा है।",
+                    latin: "Kaafi vyast rehta hoon, lekin sab bahut achha chal raha hai.",
+                    phonetic: "kaa-fee vyust reh-taa hoon, lay-kin sub buh-hoot uch-haa chul ruh-haa hai.",
+                    english: "I stay quite busy, but everything is going very well."
+                },
+                {
+                    speaker: "Amit",
+                    avatar: "🧑",
+                    devanagari: "वाह! यह चाय सच में बहुत स्वादिष्ट और कड़क है।",
+                    latin: "Waah! Yeh chai sach mein bahut swaadisht aur kadak hai.",
+                    phonetic: "waah! yeh chaay such mayn buh-hoot svaa-disht owr kuh-duk hai.",
+                    english: "Wow! This tea really is very delicious and strong."
+                },
+                {
+                    speaker: "Rahul",
+                    avatar: "👨‍🦱",
+                    devanagari: "बिलकुल! चलो शाम को फिर मिलेंगे। अपना ख्याल रखना।",
+                    latin: "Bilkul! Chalo shaam ko phir milenge. Apna khayal rakhna.",
+                    phonetic: "bil-kool! chuh-lo shaam ko feer mee-leng-ay. up-naa khyaa-al rukh-naa.",
+                    english: "Absolutely! Let's meet again in the evening. Take care of yourself."
+                }
+            ]
+        },
+        {
+            id: "conv-restaurant",
+            title: "Ordering Food at a Restaurant",
+            hindiTitle: "रेस्तरां में खाना मंगाना",
+            description: "A complete dialogue for seating, asking recommendations, customizing spice levels, and getting the bill.",
+            icon: "🍛",
+            dialogues: [
+                {
+                    speaker: "Customer",
+                    avatar: "🙋",
+                    devanagari: "नमस्ते, क्या हमें दो लोगों के लिए एक टेबल मिल सकती है?",
+                    latin: "Namaste, kya humein do logon ke liye ek table mil sakti hai?",
+                    phonetic: "nuh-muh-stay, kyah hoo-mayn doh lo-gon kay lee-yay ayk tay-bul mil suk-tee hai?",
+                    english: "Hello, can we get a table for two people?"
+                },
+                {
+                    speaker: "Waiter",
+                    avatar: "🤵",
+                    devanagari: "जी हाँ ज़रूर, कृपया यहाँ बैठिए। यह रहा मेनू कार्ड।",
+                    latin: "Ji haan zaroor, kripya yahan baithiye. Yeh raha menu card.",
+                    phonetic: "jee haan zuh-roor, krip-yah yuh-haan by-thee-yay. yeh ruh-haa may-noo kaard.",
+                    english: "Yes certainly, please sit here. Here is the menu card."
+                },
+                {
+                    speaker: "Customer",
+                    avatar: "🙋",
+                    devanagari: "यहाँ का सबसे प्रसिद्ध खाना क्या है? आप क्या सुझाव देंगे?",
+                    latin: "Yahan ka sabse prasiddh khaana kya hai? Aap kya sujhav denge?",
+                    phonetic: "yuh-haan kaa sub-say pruh-sidh khaa-naa kyah hai? aap kyah soo-jhaav dayng-ay?",
+                    english: "What is the most famous food here? What do you suggest?"
+                },
+                {
+                    speaker: "Waiter",
+                    avatar: "🤵",
+                    devanagari: "हमारा बटर पनीर मसाला और दाल मखनी बहुत लोकप्रिय है।",
+                    latin: "Humara butter paneer masala aur daal makhani bahut lokpriya hai.",
+                    phonetic: "hoo-maa-raa buh-tur puh-neer muh-saa-laa owr daal mukh-nee buh-hoot loak-pree-yuh hai.",
+                    english: "Our butter paneer masala and dal makhani are very popular."
+                },
+                {
+                    speaker: "Customer",
+                    avatar: "🙋",
+                    devanagari: "बहुत बढ़िया। एक बटर पनीर, दाल मखनी और चार मक्खन रोटियाँ ले आइए।",
+                    latin: "Bahut badhiya. Ek butter paneer, daal makhani aur chaar makkhan rotiyan le aaiye.",
+                    phonetic: "buh-hoot budh-ee-yaa. ayk buh-tur puh-neer, daal mukh-nee owr chaar muk-khun ro-tee-yaan lay aa-ee-yay.",
+                    english: "Very good. Bring one butter paneer, dal makhani and four butter rotis."
+                },
+                {
+                    speaker: "Customer",
+                    avatar: "🙋",
+                    devanagari: "कृपया ध्यान रखिएगा, खाने में ज़्यादा तीखा मिर्च मत डालिएगा।",
+                    latin: "Kripya dhyan rakhiyega, khaane mein zyada teekha mirch mat daaliyega.",
+                    phonetic: "krip-yah dhyaan rukh-ee-yay-gaa, khaa-nay mayn zyaa-daa tee-khaa mirch mut daa-lee-yay-gaa.",
+                    english: "Please take care, do not make the food too spicy with hot chilies."
+                },
+                {
+                    speaker: "Waiter",
+                    avatar: "🤵",
+                    devanagari: "बिल्कुल साहब, मध्यम तीखा रखेंगे। क्या कुछ ठंडा पीने के लिए लाऊँ?",
+                    latin: "Bilkul sahab, madhyam teekha rakhenge. Kya kuch thanda peene ke liye laaoon?",
+                    phonetic: "bil-kool saa-hub, mudh-yum tee-khaa rukh-eng-ay. kyah kooch thun-daa pee-nay kay lee-yay laa-oon?",
+                    english: "Certainly sir, we will keep it medium spicy. Shall I bring something cold to drink?"
+                },
+                {
+                    speaker: "Customer",
+                    avatar: "🙋",
+                    devanagari: "हाँ, दो ठंडी मीठी लस्सी भी साथ में ले आइएगा।",
+                    latin: "Haan, do thandi meethi lassi bhi saath mein le aaiyega.",
+                    phonetic: "haan, doh thun-dee mee-thee lus-see bhee saath mayn lay aa-ee-yay-gaa.",
+                    english: "Yes, also bring two cold sweet lassis along with it."
+                },
+                {
+                    speaker: "Customer",
+                    avatar: "🙋",
+                    devanagari: "वाह भाई, खाना सच में बहुत लाजवाब और स्वादिष्ट था!",
+                    latin: "Waah bhai, khaana sach mein bahut laajawaab aur swaadisht tha!",
+                    phonetic: "waah bhaa-ee, khaa-naa such mayn buh-hoot laa-juh-waab owr svaa-disht thaa!",
+                    english: "Wow brother, the food truly was outstanding and delicious!"
+                },
+                {
+                    speaker: "Customer",
+                    avatar: "🙋",
+                    devanagari: "भैया, कृपया बिल ले आइए। क्या आप ऑनलाइन पेमेंट लेते हैं?",
+                    latin: "Bhaiya, kripya bill le aaiye. Kya aap online payment lete hain?",
+                    phonetic: "bhaa-ee-yaa, krip-yah bill lay aa-ee-yay. kyah aap own-line pay-ment lay-tay hain?",
+                    english: "Brother, please bring the bill. Do you accept online payment?"
+                }
+            ]
+        },
+        {
+            id: "conv-taxi",
+            title: "Taking an Auto-Rickshaw & Bargaining",
+            hindiTitle: "ऑटो-रिक्शा और रास्ता पूछना",
+            description: "Essential real-world travel dialogue: negotiating fare, giving street directions, and paying the driver.",
+            icon: "🛺",
+            dialogues: [
+                {
+                    speaker: "Passenger",
+                    avatar: "🧳",
+                    devanagari: "भैया, क्या आप कनाट प्लेस चलेंगे?",
+                    latin: "Bhaiya, kya aap Connaught Place chalenge?",
+                    phonetic: "bhaa-ee-yaa, kyah aap kuh-naat plays chul-eng-ay?",
+                    english: "Brother, will you go to Connaught Place?"
+                },
+                {
+                    speaker: "Driver",
+                    avatar: "👨‍✈️",
+                    devanagari: "हाँ साहब, बिल्कुल चलेंगे। बैठिए।",
+                    latin: "Haan sahab, bilkul chalenge. Baithiye.",
+                    phonetic: "haan saa-hub, bil-kool chul-eng-ay. by-thee-yay.",
+                    english: "Yes sir, absolutely will go. Please sit."
+                },
+                {
+                    speaker: "Passenger",
+                    avatar: "🧳",
+                    devanagari: "वहाँ तक का कितना किराया लेंगे?",
+                    latin: "Wahan tak ka kitna kiraaya lenge?",
+                    phonetic: "wuh-haan tuk kaa kit-naa kee-raa-yaa layng-ay?",
+                    english: "How much fare will you charge till there?"
+                },
+                {
+                    speaker: "Driver",
+                    avatar: "👨‍✈️",
+                    devanagari: "दो सौ रुपये लगेंगे साहब।",
+                    latin: "Do sau rupaye lagenge sahab.",
+                    phonetic: "doh sow roo-puh-yay luh-geng-ay saa-hub.",
+                    english: "It will cost two hundred rupees, sir."
+                },
+                {
+                    speaker: "Passenger",
+                    avatar: "🧳",
+                    devanagari: "अरे, यह तो बहुत ज़्यादा है! कृपया मीटर से चलिए।",
+                    latin: "Are, yeh toh bahut zyada hai! Kripya meter se chaliye.",
+                    phonetic: "uh-ray, yeh toh buh-hoot zyaa-daa hai! krip-yah mee-tur say chul-ee-yay.",
+                    english: "Oh, that is way too much! Please go by the meter."
+                },
+                {
+                    speaker: "Driver",
+                    avatar: "👨‍✈️",
+                    devanagari: "साहब मीटर खराब है, चलिए एक सौ पचास दे देना।",
+                    latin: "Sahab meter kharaab hai, chaliye ek sau pachaas de dena.",
+                    phonetic: "saa-hub mee-tur khuh-raab hai, chul-ee-yay ayk sow puh-chaas day day-naa.",
+                    english: "Sir the meter is broken, alright just give one hundred fifty."
+                },
+                {
+                    speaker: "Passenger",
+                    avatar: "🧳",
+                    devanagari: "एक सौ बीस रुपये ठीक है, और जल्दी चलिएगा, जाम मत लगाना।",
+                    latin: "Ek sau bees rupaye theek hai, aur jaldi chaliyega, jaam mat lagana.",
+                    phonetic: "ayk sow bees roo-puh-yay theek hai, owr jul-dee chul-ee-yay-gaa, jaam mut luh-gaa-naa.",
+                    english: "One hundred twenty rupees is fair, and drive quickly, avoid traffic jams."
+                },
+                {
+                    speaker: "Driver",
+                    avatar: "👨‍✈️",
+                    devanagari: "ठीक है साहब, बैठिए, मैं सीधे शॉर्टकट रास्ते से चलता हूँ।",
+                    latin: "Theek hai sahab, baithiye, main seedhe shortcut raaste se chalta hoon.",
+                    phonetic: "theek hai saa-hub, by-thee-yay, main see-dhay shoart-cut raas-tay say chul-taa hoon.",
+                    english: "Alright sir, sit, I will go straight through a shortcut route."
+                },
+                {
+                    speaker: "Passenger",
+                    avatar: "🧳",
+                    devanagari: "यहाँ आगे लाल बत्ती से दाएँ मुड़ना, फिर मेट्रो स्टेशन के पास रोक देना।",
+                    latin: "Yahan aage laal batti se daayein mudna, phir metro station ke paas rok dena.",
+                    phonetic: "yuh-haan aa-gay laal but-tee say daa-yay mood-naa, feer met-ro stay-shun kay paas roak day-naa.",
+                    english: "Turn right ahead at the red traffic light, then stop near the metro station."
+                },
+                {
+                    speaker: "Passenger",
+                    avatar: "🧳",
+                    devanagari: "बस यहाँ रोक दीजिए। यह लीजिए आपके एक सौ बीस रुपये। धन्यवाद!",
+                    latin: "Bas yahan rok dijiye. Yeh lijiye aapke ek sau bees rupaye. Dhanyavaad!",
+                    phonetic: "bus yuh-haan roak dee-jee-yay. yeh lee-jee-yay aap-kay ayk sow bees roo-puh-yay. dhun-yuh-vaad!",
+                    english: "Just stop here. Here are your one hundred twenty rupees. Thank you!"
+                }
+            ]
         }
     ]
 };
