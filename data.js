@@ -1,5 +1,5 @@
 // Comprehensive Hindi Learning Dataset
-// Step-by-step phrases, full dialogues/conversations, Devanagari script, Latin transliteration (Hinglish), and phonetic breakdowns.
+// Step-by-step phrases, structured curriculum course modules, dialogues, and alphabet guides.
 
 const HINDI_DATA = {
     alphabet: {
@@ -878,6 +878,280 @@ const HINDI_DATA = {
             english: "Gray",
             notes: "Color gray.",
             audioFile: "audio/color_gray.mp3"
+        }
+    ],
+
+    // --- STRUCTURED 6-MODULE HINDI MASTERY COURSE ---
+    courseModules: [
+        {
+            id: "mod-1",
+            title: "Module 1: First Words & Essential Etiquette",
+            hindiTitle: "पहला कदम - नमस्ते और शिष्टाचार",
+            icon: "🙏",
+            description: "Master universal greetings, respectful body language, expressing gratitude, and polite conversational responses.",
+            lessons: [
+                {
+                    id: "les-1-1",
+                    title: "Lesson 1: The Sacred 'Namaste' & Greetings",
+                    concept: "In Hindi, greeting someone with 'Namaste' (नमस्ते) acknowledges the divinity in them. Press both palms together flat in front of your chest and give a slight respectful nod. It works morning, noon, or night!",
+                    phrases: ["greet-1", "greet-7", "greet-8", "greet-5"],
+                    challengePhraseId: "greet-1",
+                    quiz: {
+                        question: "What is the polite, universal Hindi greeting for any time of day?",
+                        options: ["Shukriya", "Namaste", "Theek hai", "Haanji"],
+                        correct: 1
+                    }
+                },
+                {
+                    id: "les-1-2",
+                    title: "Lesson 2: Saying Thank You & Please",
+                    concept: "Hindi has two main ways to say thank you: 'Dhanyavaad' (धन्यवाद) is formal and traditional, while 'Shukriya' (शुक्रिया) is common, conversational, and friendly. When asking for a favor, use 'Kripya' (कृपया).",
+                    phrases: ["greet-2", "greet-3", "greet-4", "greet-10"],
+                    challengePhraseId: "greet-3",
+                    quiz: {
+                        question: "Which of these is the most common casual way to say 'Thank you' in everyday spoken Hindi?",
+                        options: ["Dhanyavaad", "Kripya", "Shukriya", "Alvida"],
+                        correct: 2
+                    }
+                },
+                {
+                    id: "les-1-3",
+                    title: "Lesson 3: The Golden Responses: Yes, No & Okay",
+                    concept: "Saying 'Theek hai' (ठीक है) is the ultimate multi-purpose phrase in India—it means 'Okay', 'Alright', 'Got it', and 'Sounds good'. Adding 'ji' to 'Haan' (Haanji) makes 'Yes' deeply respectful.",
+                    phrases: ["daily-1", "daily-2", "daily-3", "greet-9"],
+                    challengePhraseId: "daily-3",
+                    quiz: {
+                        question: "What does 'Theek hai' mean in daily conversation?",
+                        options: ["No thanks", "Okay / Alright", "Where is it?", "Come here"],
+                        correct: 1
+                    }
+                }
+            ]
+        },
+        {
+            id: "mod-2",
+            title: "Module 2: Self-Introduction & Meeting People",
+            hindiTitle: "परिचय - नाम और बातचीत",
+            icon: "🤝",
+            description: "Learn how to introduce yourself, state your name and home country, ask how others are doing, and build friendship.",
+            lessons: [
+                {
+                    id: "les-2-1",
+                    title: "Lesson 4: Asking Names & Introducing Yourself",
+                    concept: "To ask someone's name respectfully, say 'Aapka naam kya hai?'. To answer, say 'Mera naam [Your Name] hai'. After learning their name, warmly say 'Aapse milkar khushi hui' (Nice to meet you).",
+                    phrases: ["intro-1", "intro-2", "intro-7"],
+                    challengePhraseId: "intro-1",
+                    quiz: {
+                        question: "How do you say 'My name is Alex' in Hindi?",
+                        options: ["Aapka naam Alex hai", "Mera naam Alex hai", "Main Alex hoon kahan", "Alex theek hai"],
+                        correct: 1
+                    }
+                },
+                {
+                    id: "les-2-2",
+                    title: "Lesson 5: Inquiring About Well-Being",
+                    concept: "When speaking to someone politely, ask 'Aap kaise hain?'. To reply, simply say 'Main theek hoon' (I am fine). If speaking to a female specifically, the question becomes 'Aap kaisi hain?'.",
+                    phrases: ["intro-3", "intro-4", "intro-5", "intro-6"],
+                    challengePhraseId: "intro-3",
+                    quiz: {
+                        question: "What is the polite standard way to ask someone 'How are you?'",
+                        options: ["Aap kaise hain?", "Chalo chalein?", "Aap kahan se hain?", "Kya haal hai"],
+                        correct: 0
+                    }
+                },
+                {
+                    id: "les-2-3",
+                    title: "Lesson 6: Countries & Origins",
+                    concept: "To ask someone where they are from, say 'Aap kahan se hain?'. To answer, insert your country: 'Main America / Vietnam / England se hoon'.",
+                    phrases: ["intro-8", "intro-9", "daily-9"],
+                    challengePhraseId: "intro-8",
+                    quiz: {
+                        question: "How do you say 'Where are you from?'",
+                        options: ["Aap kahan jaa rahe hain?", "Aap kahan se hain?", "Aap kaise hain?", "Kripya yahan aaiye"],
+                        correct: 1
+                    }
+                }
+            ]
+        },
+        {
+            id: "mod-3",
+            title: "Module 3: Numbers, Money & Market Bargaining",
+            hindiTitle: "संख्या, पैसे और खरीदारी",
+            icon: "🔢",
+            description: "Gain complete confidence counting numbers 1 to 10, asking prices in bustling bazaars, and negotiating with polite charm.",
+            lessons: [
+                {
+                    id: "les-3-1",
+                    title: "Lesson 7: Foundation Numbers (1 to 5)",
+                    concept: "The first five numbers in Hindi are essential for ordering items and telling quantities: Ek (1), Do (2), Teen (3), Chaar (4), Paanch (5).",
+                    phrases: ["num-1", "num-2", "num-3", "num-4", "num-5"],
+                    challengePhraseId: "num-1",
+                    quiz: {
+                        question: "What is the Hindi word for number Three (3)?",
+                        options: ["Do", "Chaar", "Teen", "Paanch"],
+                        correct: 2
+                    }
+                },
+                {
+                    id: "les-3-2",
+                    title: "Lesson 8: Numbers (6 to 10) & Currency",
+                    concept: "Continuing your numbers: Chhah (6), Saat (7), Aath (8), Nau (9), Das (10). Crucial big numbers are Bees (20), Pachaas (50), and Sau (100).",
+                    phrases: ["num-6", "num-7", "num-8", "num-9", "num-10", "num-100"],
+                    challengePhraseId: "num-10",
+                    quiz: {
+                        question: "What does 'Sau' mean?",
+                        options: ["Ten (10)", "Twenty (20)", "Fifty (50)", "One Hundred (100)"],
+                        correct: 3
+                    }
+                },
+                {
+                    id: "les-3-3",
+                    title: "Lesson 9: Shopping & Bargaining Like a Local",
+                    concept: "Whenever you point to an item in an Indian market, ask 'Yeh kitne ka hai?' (How much is this?). If the price is steep, counter with 'Yeh bahut mehanga hai!' and politely request 'Thoda kam kijiye' (Please reduce it a bit).",
+                    phrases: ["shop-1", "shop-2", "shop-3", "shop-4", "shop-5"],
+                    challengePhraseId: "shop-1",
+                    quiz: {
+                        question: "What phrase should you say to ask 'How much is this?'",
+                        options: ["Yeh kitne ka hai?", "Thoda kam kijiye", "Mujhe paani chahiye", "Yeh kahan hai?"],
+                        correct: 0
+                    }
+                }
+            ]
+        },
+        {
+            id: "mod-4",
+            title: "Module 4: Food, Dining & Chai Culture",
+            hindiTitle: "खाना, चाय और रेस्तरां",
+            icon: "🍛",
+            description: "Order legendary Indian dishes, specify your spice tolerance, order chai at tea stalls, and compliment your host.",
+            lessons: [
+                {
+                    id: "les-4-1",
+                    title: "Lesson 10: Chai Stall Secrets",
+                    concept: "Chai stalls (chai ki tapri) are the social heart of India. To order, ask 'Chai milegi?' (Can I get tea?) and customize it: 'Kam cheeni' (less sugar) or 'Adrak masala chai' (ginger masala tea).",
+                    phrases: ["food-4", "food-1", "daily-4"],
+                    challengePhraseId: "food-4",
+                    quiz: {
+                        question: "How do you ask 'Can I get tea/chai?'",
+                        options: ["Paani chahiye", "Chai milegi?", "Bhookh lagi hai", "Bill le aaiye"],
+                        correct: 1
+                    }
+                },
+                {
+                    id: "les-4-2",
+                    title: "Lesson 11: Food Ordering & Spice Control",
+                    concept: "If you want to survive spicy Indian food, remember this golden phrase: 'Zyada teekha nahi' (Not too spicy!). When thirsty, ask 'Mujhe paani chahiye' (I want water).",
+                    phrases: ["food-1", "food-3", "food-5", "food-6"],
+                    challengePhraseId: "food-5",
+                    quiz: {
+                        question: "Which phrase means 'Not too spicy'?",
+                        options: ["Bahut swaadisht hai", "Zyada teekha nahi", "Bhookh lagi hai", "Theek hai"],
+                        correct: 1
+                    }
+                },
+                {
+                    id: "les-4-3",
+                    title: "Lesson 12: Complimenting the Chef & Bill",
+                    concept: "After a delicious meal, praising the food with 'Khaana bahut swaadisht hai' (The food is very delicious) will bring huge smiles. Then conclude with 'Bill le aaiye' (Please bring the bill).",
+                    phrases: ["food-2", "food-6", "greet-3"],
+                    challengePhraseId: "food-2",
+                    quiz: {
+                        question: "How do you tell the waiter or host 'The food is very delicious'?",
+                        options: ["Khaana bahut swaadisht hai", "Bill le aaiye", "Mujhe madad chahiye", "Thoda kam kijiye"],
+                        correct: 0
+                    }
+                }
+            ]
+        },
+        {
+            id: "mod-5",
+            title: "Module 5: Getting Around, Taxis & Directions",
+            hindiTitle: "रास्ता, ऑटो-रिक्शा और सफ़र",
+            icon: "🧭",
+            description: "Navigate cities with ease: hailing auto-rickshaws, asking for meters, giving street directions, and asking for help.",
+            lessons: [
+                {
+                    id: "les-5-1",
+                    title: "Lesson 13: Finding Facilities & Asking for Help",
+                    concept: "When in need of help, say 'Mujhe madad chahiye' (I need help). If you need a washroom, ask 'Bathroom kahan hai?' (Where is the bathroom?). Point to an address and ask 'Yeh kahan hai?'.",
+                    phrases: ["dir-1", "dir-2", "dir-3"],
+                    challengePhraseId: "dir-2",
+                    quiz: {
+                        question: "How do you ask 'Where is the bathroom?' in Hindi?",
+                        options: ["Yeh kahan hai?", "Bathroom kahan hai?", "Madad kijiye", "Seedhe jaiye"],
+                        correct: 1
+                    }
+                },
+                {
+                    id: "les-5-2",
+                    title: "Lesson 14: Giving Street Directions",
+                    concept: "When directing an auto driver or taxi: 'Seedhe jaiye' (Go straight), 'Baayein mudiye' (Turn left), 'Daayein mudiye' (Turn right), and 'Yahan rukiye' (Stop here please).",
+                    phrases: ["dir-4", "dir-5", "dir-6", "dir-7"],
+                    challengePhraseId: "dir-4",
+                    quiz: {
+                        question: "What does 'Seedhe jaiye' mean?",
+                        options: ["Turn left", "Turn right", "Go straight", "Stop here"],
+                        correct: 2
+                    }
+                },
+                {
+                    id: "les-5-3",
+                    title: "Lesson 15: Understanding Speed & Comprehension",
+                    concept: "Native speakers often speak fast. Politely ask them 'Kripya dheere boliye' (Please speak slowly), or tell them 'Mujhe samajh nahi aaya' (I didn't understand).",
+                    phrases: ["daily-10", "daily-11", "daily-9"],
+                    challengePhraseId: "daily-11",
+                    quiz: {
+                        question: "If someone is speaking too fast, what should you say?",
+                        options: ["Kripya dheere boliye", "Chalo chalein", "Yahan aao", "Main theek hoon"],
+                        correct: 0
+                    }
+                }
+            ]
+        },
+        {
+            id: "mod-6",
+            title: "Module 6: People, Family & Relationships",
+            hindiTitle: "परिवार और रिश्ते",
+            icon: "👨‍👩‍👧",
+            description: "Understand the deep culture of Indian family relationships, respectful terms of address, and honorific suffixes like 'ji'.",
+            lessons: [
+                {
+                    id: "les-6-1",
+                    title: "Lesson 16: Parents & The Honorific 'Ji'",
+                    concept: "In Hindi, adding 'ji' after a title shows deep respect and warmth: 'Pitaji' (Father) and 'Mataji' (Mother). You can also affectionately say 'Papa' and 'Maa'.",
+                    phrases: ["fam-father", "fam-mother"],
+                    challengePhraseId: "fam-father",
+                    quiz: {
+                        question: "Why do Hindi speakers attach 'ji' to words like 'Pitaji' or 'Haanji'?",
+                        options: ["It signifies plural", "It conveys deep honor, polite respect, and affection", "It is for questions only", "It indicates anger"],
+                        correct: 1
+                    }
+                },
+                {
+                    id: "les-6-2",
+                    title: "Lesson 17: Siblings & Addressing Elders",
+                    concept: "An older brother is called 'Bhaiya' or 'Bada bhai'. An older sister is respectfully and affectionately addressed as 'Didi' or 'Badi behen'. In India, strangers are also often politely called Bhaiya or Didi!",
+                    phrases: ["fam-older-brother", "fam-young-brother", "fam-older-sister", "fam-young-sister"],
+                    challengePhraseId: "fam-older-brother",
+                    quiz: {
+                        question: "What is the common respectful way to address an older sister or young woman in India?",
+                        options: ["Bhaiya", "Didi", "Dadiji", "Naniji"],
+                        correct: 1
+                    }
+                },
+                {
+                    id: "les-6-3",
+                    title: "Lesson 18: Grandparents & Children",
+                    concept: "Hindi uniquely distinguishes paternal from maternal grandparents: Dadaji & Dadiji (Father's side), and Nanaji & Naniji (Mother's side). Children are called Beta (Son) and Beti (Daughter).",
+                    phrases: ["fam-grandfather-paternal", "fam-grandmother-paternal", "fam-grandfather-maternal", "fam-grandmother-maternal", "fam-son", "fam-daughter"],
+                    challengePhraseId: "fam-grandfather-paternal",
+                    quiz: {
+                        question: "Who are 'Nanaji' and 'Naniji'?",
+                        options: ["Paternal Grandparents (Father's side)", "Maternal Grandparents (Mother's side)", "Older brothers", "Neighbors"],
+                        correct: 1
+                    }
+                }
+            ]
         }
     ],
 

@@ -1,15 +1,18 @@
 // Spoken Hindi Interactive Learning Application
-// Features: Bulletproof Multi-Layer Audio Playback (Google Cloud Native TTS + Local WAV + Web Speech hi-IN),
+// Features: 90-Day Step-by-Step Curriculum Course, Bulletproof Multi-Layer Audio Playback,
 // Speech Recognition Pronunciation Checker, Long Conversations Dialogue Lab, Quiz & Flashcards
 
 class HindiLearningApp {
     constructor() {
         this.data = HINDI_DATA;
+        this.courseData = typeof HINDI_COURSE !== 'undefined' ? HINDI_COURSE : null;
         this.currentCategory = 'all';
         this.currentConversationId = 'conv-chai';
+        this.currentCourseMonth = 1;
+        this.selectedDayNumber = 1;
         this.searchTerm = '';
         this.playbackSpeed = 1.0;
-        this.currentView = 'phrases'; // 'phrases' | 'conversations' | 'quiz' | 'alphabet'
+        this.currentView = 'course'; // Default to Course tab!
         this.selectedVoice = null;
         this.recognition = null;
         this.isRecording = false;
@@ -37,6 +40,7 @@ class HindiLearningApp {
         this.renderPhrases();
         this.renderAlphabet();
         this.renderConversations();
+        this.renderCourse();
         this.updateStatsDisplay();
         this.setupEventListeners();
     }
@@ -82,31 +86,23 @@ class HindiLearningApp {
         }
     }
 
-    // Master function to play any Hindi text with multiple reliable fallbacks
     playAudio(text, audioFile = null, phoneticFallback = '') {
         if (!text && !audioFile) return;
-
-        // Stop any currently playing audio
         this.stopCurrentAudio();
 
-        // Layer 1: If pre-recorded native WAV file exists and available
         if (audioFile) {
             const audio = new Audio(audioFile);
             audio.playbackRate = this.playbackSpeed;
             this.currentAudio = audio;
             const playPromise = audio.play();
             if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    return; // Successfully playing local WAV
-                }).catch(() => {
-                    // Fall back to cloud stream
+                playPromise.catch(() => {
                     this.playGoogleTTSStream(text, phoneticFallback);
                 });
                 return;
             }
         }
 
-        // Layer 2: Google Cloud Native Hindi Audio Stream (Highest quality, authentic Indian pronunciation)
         this.playGoogleTTSStream(text, phoneticFallback);
     }
 
@@ -114,7 +110,6 @@ class HindiLearningApp {
         try {
             const clean = text.replace(/[?|।!]/g, '').trim();
             const encoded = encodeURIComponent(clean);
-            // Google Translate TTS endpoint - high reliability, cross-origin allowed
             const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=hi&client=tw-ob&q=${encoded}`;
             
             const audio = new Audio(url);
@@ -124,7 +119,7 @@ class HindiLearningApp {
             const playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.catch((err) => {
-                    console.warn("Cloud stream play prevented or network error, falling back to Web Speech:", err);
+                    console.warn("Cloud audio fallback to Web Speech:", err);
                     this.speakWebSpeech(text, phoneticFallback);
                 });
             }
@@ -134,20 +129,13 @@ class HindiLearningApp {
     }
 
     speakWebSpeech(text, phoneticFallback = '') {
-        if (!('speechSynthesis' in window)) {
-            alert("Audio playback is not supported by this browser.");
-            return;
-        }
-
+        if (!('speechSynthesis' in window)) return;
         window.speechSynthesis.cancel();
-        // Resume is crucial in Chrome as it often pauses background synthesis
         window.speechSynthesis.resume();
 
         const voices = window.speechSynthesis.getVoices();
         const hasHindiVoice = voices.some(v => v.lang.startsWith('hi') || v.name.toLowerCase().includes('hindi'));
 
-        // If client machine has NO Hindi voice installed, an English voice will be silent on Devanagari.
-        // Therefore, we speak the Latin phonetic text so sound ALWAYS plays!
         const textToSpeak = hasHindiVoice ? text : (phoneticFallback || text);
         const utterance = new SpeechSynthesisUtterance(textToSpeak);
         
@@ -308,10 +296,15 @@ class HindiLearningApp {
         const cleanSpoken = this.cleanHindiText(spokenText);
 
         const score = this.calculateSimilarity(cleanTarget, cleanSpoken);
-        this.playFeedbackTone(score >= 65);
+        this.playFeedbackTone(score >= 60);
 
-        if (score >= 65 && !phraseId.startsWith('dialogue-')) {
-            this.markMastered(phraseId);
+        if (score >= 60) {
+            if (phraseId.startsWith('day-challenge-')) {
+                const dayNum = parseInt(phraseId.replace('day-challenge-', ''));
+                this.markDayCompleted(dayNum);
+            } else if (!phraseId.startsWith('dialogue-')) {
+                this.markMastered(phraseId);
+            }
         }
 
         this.showEvaluationResult(phraseId, {
@@ -417,7 +410,7 @@ class HindiLearningApp {
                         <span>${icon}</span> Match: ${result.score}%
                     </span>
                     <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-white bg-opacity-70 border">
-                        ${result.score >= 65 ? 'Passed' : 'Needs Practice'}
+                        ${result.score >= 60 ? 'Passed' : 'Needs Practice'}
                     </span>
                 </div>
                 <div class="text-xs space-y-1 mb-2">
@@ -433,9 +426,9 @@ class HindiLearningApp {
     loadProgress() {
         try {
             const saved = localStorage.getItem('hindi_learner_progress');
-            return saved ? JSON.parse(saved) : { mastered: [], streak: 1 };
+            return saved ? JSON.parse(saved) : { mastered: [], completedDays: [1], streak: 1 };
         } catch (e) {
-            return { mastered: [], streak: 1 };
+            return { mastered: [], completedDays: [1], streak: 1 };
         }
     }
 
@@ -454,7 +447,32 @@ class HindiLearningApp {
         }
     }
 
+    markDayCompleted(dayNumber) {
+        if (!this.userProgress.completedDays) {
+            this.userProgress.completedDays = [];
+        }
+        if (!this.userProgress.completedDays.includes(dayNumber)) {
+            this.userProgress.completedDays.push(dayNumber);
+            this.saveProgress();
+            this.renderCourse();
+            this.showToast(`🎉 Day ${dayNumber} Completed! Keep the momentum!`);
+        }
+    }
+
     updateStatsDisplay() {
+        const completedDays = (this.userProgress.completedDays || []).length;
+        const totalDays = (this.courseData && this.courseData.totalDays) || 90;
+        const coursePercent = Math.round((completedDays / totalDays) * 100);
+
+        const courseDaysEl = document.getElementById('stat-course-days');
+        const coursePercentEl = document.getElementById('stat-course-percent');
+        const courseBarFill = document.getElementById('course-bar-fill');
+
+        if (courseDaysEl) courseDaysEl.textContent = completedDays;
+        if (coursePercentEl) coursePercentEl.textContent = `${coursePercent}%`;
+        if (courseBarFill) courseBarFill.style.width = `${coursePercent}%`;
+
+        // Phrases Stats
         const masteredCountEl = document.getElementById('stat-mastered-count');
         const totalPhrasesEl = document.getElementById('stat-total-count');
         const percentEl = document.getElementById('stat-percent');
@@ -467,6 +485,179 @@ class HindiLearningApp {
             const bar = document.getElementById('progress-bar-fill');
             if (bar) bar.style.width = `${percent}%`;
         }
+    }
+
+    // --- 90-DAY COURSE ENGINE (3 MONTHS) ---
+    renderCourse() {
+        if (!this.courseData) return;
+
+        const monthsContainer = document.getElementById('course-month-tabs');
+        const daysGrid = document.getElementById('course-days-grid');
+        const activeLessonContainer = document.getElementById('course-active-lesson');
+        if (!monthsContainer || !daysGrid || !activeLessonContainer) return;
+
+        // Render 3 Months Tabs
+        monthsContainer.innerHTML = this.courseData.months.map(m => `
+            <button onclick="app.selectCourseMonth(${m.month})" class="p-3.5 rounded-2xl font-medium text-left transition-all border flex items-center justify-between ${
+                this.currentCourseMonth === m.month
+                    ? 'bg-amber-600 text-white border-amber-600 shadow-md'
+                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+            }">
+                <div class="flex items-center gap-2.5">
+                    <span class="text-2xl">${m.icon}</span>
+                    <div>
+                        <div class="font-bold text-sm leading-tight">${m.title}</div>
+                        <div class="text-[11px] opacity-85">${m.weeks}</div>
+                    </div>
+                </div>
+            </button>
+        `).join('');
+
+        // Filter days for the active month
+        const filteredDays = this.courseData.days.filter(d => d.month === this.currentCourseMonth);
+
+        // Render Day Cards in Month Grid
+        daysGrid.innerHTML = filteredDays.map(d => {
+            const isCompleted = (this.userProgress.completedDays || []).includes(d.day);
+            const isSelected = this.selectedDayNumber === d.day;
+
+            return `
+                <div onclick="app.selectCourseDay(${d.day})" class="p-3 rounded-xl border cursor-pointer transition-all flex flex-col justify-between ${
+                    isSelected
+                        ? 'border-amber-500 bg-amber-50/70 shadow-sm ring-2 ring-amber-500/20'
+                        : isCompleted
+                            ? 'border-emerald-300 bg-emerald-50/40 hover:border-emerald-400'
+                            : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
+                }">
+                    <div class="flex items-center justify-between mb-1.5">
+                        <span class="text-xs font-extrabold ${isSelected ? 'text-amber-700' : 'text-slate-500'}">Day ${d.day}</span>
+                        ${isCompleted ? '<span class="text-emerald-600 text-xs font-bold">✓ Done</span>' : '<span class="text-[10px] text-slate-400">Week ' + d.week + '</span>'}
+                    </div>
+                    <div class="font-bold text-slate-900 text-xs leading-snug line-clamp-1">${d.title}</div>
+                    <div class="text-[11px] font-hindi text-amber-700 font-semibold truncate mt-0.5">${d.hindiTitle}</div>
+                </div>
+            `;
+        }).join('');
+
+        // Render Current Active Day Lesson Content
+        const currentDayObj = this.courseData.days.find(d => d.day === this.selectedDayNumber) || this.courseData.days[0];
+        const isDayDone = (this.userProgress.completedDays || []).includes(currentDayObj.day);
+
+        activeLessonContainer.innerHTML = `
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+                <!-- Lesson Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
+                    <div>
+                        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-600">
+                            <span>Month ${currentDayObj.month} • Week ${currentDayObj.week}</span>
+                            <span>•</span>
+                            <span>Day ${currentDayObj.day} of 90</span>
+                        </div>
+                        <h2 class="text-2xl font-extrabold text-slate-900 mt-1">${currentDayObj.title}</h2>
+                        <h3 class="text-lg font-bold font-hindi text-amber-700 mt-0.5">${currentDayObj.hindiTitle}</h3>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="app.selectCourseDay(${Math.max(1, currentDayObj.day - 1)})" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors">
+                            ◀ Prev
+                        </button>
+                        <button onclick="app.selectCourseDay(${Math.min(90, currentDayObj.day + 1)})" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors">
+                            Next ▶
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Today's Learning Objective & Cultural Tip -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
+                    <div class="bg-amber-50/60 p-4 rounded-xl border border-amber-100">
+                        <div class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                            <span>🎯</span> Today's Objective
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${currentDayObj.objective}</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                            <span>💡</span> Cultural / Grammar Secret
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${currentDayObj.tip}</p>
+                    </div>
+                </div>
+
+                <!-- Today's Key Phrases -->
+                <div class="my-6">
+                    <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">Today's Spoken Phrases</h4>
+                    <div class="space-y-3">
+                        ${currentDayObj.phrases.map((p, idx) => `
+                            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/40 hover:bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all">
+                                <div>
+                                    <div class="text-2xl font-bold font-hindi text-slate-900">${p.devanagari}</div>
+                                    <div class="text-base font-semibold text-amber-700 mt-0.5">${p.latin}</div>
+                                    <div class="text-xs font-mono text-slate-400 mt-0.5"><span class="text-slate-300">say:</span> ${p.phonetic}</div>
+                                    <div class="text-sm font-medium text-slate-700 mt-1">${p.english}</div>
+                                </div>
+                                <button onclick="app.playAudio('${p.devanagari.replace(/'/g, "\\'")}', null, '${p.latin.replace(/'/g, "\\'")}')" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-transform active:scale-95 self-start sm:self-auto">
+                                    <span>🔊</span> Listen
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- Daily Speaking Checkpoint -->
+                <div class="mt-6 p-5 rounded-2xl border ${isDayDone ? 'bg-emerald-50/50 border-emerald-200' : 'bg-orange-50/40 border-orange-200'}">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider ${isDayDone ? 'text-emerald-800' : 'text-orange-800'}">
+                            🎙️ Daily Speaking Challenge
+                        </span>
+                        ${isDayDone ? '<span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">Day Mastered ✓</span>' : ''}
+                    </div>
+                    <p class="text-xs text-slate-600 mb-3">${currentDayObj.challenge.instruction}</p>
+
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                        <div>
+                            <div class="text-xl font-bold font-hindi text-slate-900">${currentDayObj.challenge.devanagari}</div>
+                            <div class="text-sm font-semibold text-amber-700">${currentDayObj.challenge.latin}</div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="app.playAudio('${currentDayObj.challenge.devanagari.replace(/'/g, "\\'")}', null, '${currentDayObj.challenge.latin.replace(/'/g, "\\'")}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold flex items-center gap-1">
+                                <span>🔊</span> Listen Target
+                            </button>
+                            <button id="mic-btn-day-challenge-${currentDayObj.day}" onclick="app.startChecking('day-challenge-${currentDayObj.day}', '${currentDayObj.challenge.devanagari.replace(/'/g, "\\'")}', '${currentDayObj.challenge.latin.replace(/'/g, "\\'")}')" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all">
+                                <span>🎙️ Speak to Pass</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="eval-result-day-challenge-${currentDayObj.day}" class="hidden"></div>
+
+                    <!-- Manual Complete Toggle -->
+                    <div class="mt-4 pt-3 border-t border-slate-200/50 flex items-center justify-between">
+                        <span class="text-xs text-slate-500">Practice completed for today?</span>
+                        <button onclick="app.markDayCompleted(${currentDayObj.day})" class="px-4 py-2 ${isDayDone ? 'bg-emerald-600' : 'bg-slate-800 hover:bg-slate-900'} text-white rounded-xl text-xs font-bold transition-all shadow-sm">
+                            ${isDayDone ? '✓ Completed (Click to Re-confirm)' : 'Mark Day as Completed'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    selectCourseMonth(monthNum) {
+        this.currentCourseMonth = monthNum;
+        // Pick first day of that month
+        if (monthNum === 1) this.selectedDayNumber = 1;
+        else if (monthNum === 2) this.selectedDayNumber = 31;
+        else if (monthNum === 3) this.selectedDayNumber = 61;
+        this.renderCourse();
+    }
+
+    selectCourseDay(dayNum) {
+        this.selectedDayNumber = dayNum;
+        // Sync month tab if needed
+        if (dayNum <= 30) this.currentCourseMonth = 1;
+        else if (dayNum <= 60) this.currentCourseMonth = 2;
+        else this.currentCourseMonth = 3;
+        this.renderCourse();
     }
 
     // --- RENDERING STEP-BY-STEP PHRASES ---
@@ -534,27 +725,22 @@ class HindiLearningApp {
                     ` : ''}
 
                     <div>
-                        <!-- Devanagari Script -->
                         <div class="text-3xl font-extrabold text-slate-900 tracking-wide font-hindi mt-1 mb-2">
                             ${p.devanagari}
                         </div>
 
-                        <!-- Latin Transliteration (Hinglish) -->
                         <div class="text-lg font-bold text-amber-700 tracking-wide flex items-center gap-2">
                             <span>${p.latin}</span>
                         </div>
 
-                        <!-- Phonetic Pronunciation Guide -->
                         <div class="text-xs font-mono text-slate-500 mt-0.5 flex items-center gap-1">
                             <span class="text-slate-400">say:</span> <span class="bg-slate-100 px-2 py-0.5 rounded text-slate-700">${p.phonetic || p.latin}</span>
                         </div>
 
-                        <!-- English Meaning -->
                         <div class="mt-3 text-slate-800 font-medium text-base border-t border-slate-100 pt-2.5">
                             ${p.english}
                         </div>
 
-                        <!-- Context & Cultural Note -->
                         ${p.notes ? `
                             <p class="text-xs text-slate-500 mt-1.5 leading-relaxed bg-amber-50/50 p-2 rounded-lg border border-amber-100/60">
                                 💡 ${p.notes}
@@ -562,7 +748,6 @@ class HindiLearningApp {
                         ` : ''}
                     </div>
 
-                    <!-- Audio and Speech Action Buttons -->
                     <div class="mt-4 pt-3 border-t border-slate-100 flex flex-col gap-2">
                         <div class="flex items-center gap-2">
                             <button onclick="app.playPhraseAudio('${p.id}')" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-3 rounded-xl text-sm flex items-center justify-center gap-1.5 transition-colors shadow-sm">
@@ -584,13 +769,12 @@ class HindiLearningApp {
         }).join('');
     }
 
-    // --- RENDERING LONG CONVERSATIONS (DIALOGUE LAB) ---
+    // --- RENDERING LONG CONVERSATIONS ---
     renderConversations() {
         const selectorContainer = document.getElementById('conversation-selectors');
         const contentContainer = document.getElementById('conversation-content');
         if (!selectorContainer || !contentContainer) return;
 
-        // Render Selector Tabs
         selectorContainer.innerHTML = this.data.conversations.map(c => `
             <button onclick="app.selectConversation('${c.id}')" class="px-4 py-2.5 rounded-xl font-medium text-sm transition-all text-left flex items-center gap-3 border ${
                 this.currentConversationId === c.id
@@ -605,7 +789,6 @@ class HindiLearningApp {
             </button>
         `).join('');
 
-        // Find active conversation
         const activeConv = this.data.conversations.find(c => c.id === this.currentConversationId) || this.data.conversations[0];
 
         contentContainer.innerHTML = `
@@ -620,13 +803,11 @@ class HindiLearningApp {
                         <p class="text-xs text-slate-500 mt-1">${activeConv.description}</p>
                     </div>
 
-                    <!-- Autoplay Full Dialogue Button -->
                     <button id="btn-autoplay-conv" onclick="app.autoplayConversation('${activeConv.id}')" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm transition-transform active:scale-95 whitespace-nowrap self-start sm:self-auto">
                         <span>▶️</span> Listen Full Conversation
                     </button>
                 </div>
 
-                <!-- Dialogue Lines Stream -->
                 <div class="mt-6 space-y-4" id="dialogue-lines-list">
                     ${activeConv.dialogues.map((d, index) => {
                         const isEven = index % 2 === 0;
@@ -650,22 +831,18 @@ class HindiLearningApp {
                                     </div>
                                 </div>
 
-                                <!-- Hindi Devanagari -->
                                 <div class="text-xl sm:text-2xl font-bold font-hindi text-slate-900 leading-snug">
                                     ${d.devanagari}
                                 </div>
 
-                                <!-- Latin Transliteration -->
                                 <div class="text-sm sm:text-base font-semibold text-amber-800 mt-1">
                                     ${d.latin}
                                 </div>
 
-                                <!-- Phonetics -->
                                 <div class="text-xs font-mono text-slate-500 mt-0.5">
                                     <span class="text-slate-400">say:</span> ${d.phonetic}
                                 </div>
 
-                                <!-- English Translation -->
                                 <div class="text-sm font-medium text-slate-700 mt-2 pt-2 border-t border-slate-200/50">
                                     ${d.english}
                                 </div>
@@ -684,7 +861,6 @@ class HindiLearningApp {
         this.renderConversations();
     }
 
-    // Autoplay all dialogue turns sequentially with highlight
     async autoplayConversation(convId) {
         const conv = this.data.conversations.find(c => c.id === convId);
         if (!conv) return;
@@ -707,17 +883,13 @@ class HindiLearningApp {
             const lineId = `dialogue-${conv.id}-${i}`;
             const lineEl = document.getElementById(lineId);
 
-            // Highlight line
             document.querySelectorAll('#dialogue-lines-list > div').forEach(el => el.classList.remove('ring-2', 'ring-amber-500'));
             if (lineEl) {
                 lineEl.classList.add('ring-2', 'ring-amber-500');
                 lineEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
 
-            // Play line audio
             this.playAudio(d.devanagari, null, d.latin);
-
-            // Estimate duration based on text length (minimum 2.5s)
             const durationMs = Math.max(2600, d.devanagari.length * 95);
             await new Promise(r => setTimeout(r, durationMs));
         }
@@ -880,6 +1052,8 @@ class HindiLearningApp {
             this.startQuiz();
         } else if (viewName === 'conversations') {
             this.renderConversations();
+        } else if (viewName === 'course') {
+            this.renderCourse();
         }
     }
 

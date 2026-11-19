@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bol Hindi - Interactive Spoken Hindi Learning Lab</title>
+    <title>Bol Hindi - 3-Month Interactive Spoken Hindi Course</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts for Devanagari & Latin -->
@@ -41,9 +41,9 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-                        Bol Hindi <span class="text-xs bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded-full border border-amber-200">Spoken Lab</span>
+                        Bol Hindi <span class="text-xs bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded-full border border-amber-200">3-Month Academy</span>
                     </h1>
-                    <p class="text-xs text-slate-500">Phrases, Long Dialogues, Latin Transliteration & Pronunciation Checker</p>
+                    <p class="text-xs text-slate-500">90-Day Curriculum • Latin Transliteration • Audio • Pronunciation Checker</p>
                 </div>
             </div>
 
@@ -74,24 +74,33 @@
             </div>
         </div>
 
-        <!-- Progress Tracker Banner -->
-        <div class="bg-amber-500/10 border-t border-amber-500/20 px-4 py-2">
+        <!-- 90-Day Course Journey Progress Banner -->
+        <div class="bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 border-t border-amber-500/20 px-4 py-2">
             <div class="max-w-6xl mx-auto flex items-center justify-between text-xs">
-                <div class="flex items-center gap-2">
-                    <span class="font-bold text-amber-900">Your Progress:</span>
-                    <span class="text-slate-700"><span id="stat-mastered-count" class="font-bold text-amber-700">0</span> / <span id="stat-total-count" class="font-semibold">0</span> phrases mastered</span>
-                    <span id="stat-percent" class="font-bold text-amber-800 bg-white px-2 py-0.5 rounded-full border border-amber-200 text-[11px]">0%</span>
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <span class="font-bold text-amber-900 flex items-center gap-1">
+                        <span>🎓</span> 3-Month Journey:
+                    </span>
+                    <span class="text-slate-700">
+                        Day <span id="stat-course-days" class="font-bold text-amber-700">1</span> / <strong>90 Days</strong>
+                    </span>
+                    <span id="stat-course-percent" class="font-bold text-amber-800 bg-white px-2 py-0.5 rounded-full border border-amber-200 text-[11px]">
+                        1%
+                    </span>
                 </div>
-                <div class="w-28 sm:w-48 bg-amber-200 h-2 rounded-full overflow-hidden">
-                    <div id="progress-bar-fill" class="bg-amber-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                <div class="w-28 sm:w-56 bg-amber-200 h-2 rounded-full overflow-hidden">
+                    <div id="course-bar-fill" class="bg-gradient-to-r from-amber-500 to-orange-500 h-full rounded-full transition-all duration-500" style="width: 1%"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Nav Tabs -->
+        <!-- Main Navigation Tabs -->
         <div class="max-w-6xl mx-auto px-4 flex gap-4 sm:gap-8 border-t border-slate-100 overflow-x-auto no-scrollbar">
-            <button id="tab-btn-phrases" onclick="app.switchView('phrases')" class="nav-tab py-3 text-sm text-amber-600 border-b-2 border-amber-600 font-bold flex items-center gap-2 whitespace-nowrap">
-                <span>📖</span> Step-by-Step Phrases
+            <button id="tab-btn-course" onclick="app.switchView('course')" class="nav-tab py-3 text-sm text-amber-600 border-b-2 border-amber-600 font-bold flex items-center gap-2 whitespace-nowrap">
+                <span>🎓</span> 90-Day Course
+            </button>
+            <button id="tab-btn-phrases" onclick="app.switchView('phrases')" class="nav-tab py-3 text-sm text-slate-500 hover:text-slate-800 transition-colors flex items-center gap-2 whitespace-nowrap font-medium">
+                <span>📖</span> Phrase Library
             </button>
             <button id="tab-btn-conversations" onclick="app.switchView('conversations')" class="nav-tab py-3 text-sm text-slate-500 hover:text-slate-800 transition-colors flex items-center gap-2 whitespace-nowrap font-medium">
                 <span>🗣️</span> Long Conversations
@@ -108,8 +117,34 @@
     <!-- Main Content Area -->
     <main class="max-w-6xl w-full mx-auto px-4 py-6 flex-1">
 
-        <!-- VIEW 1: STEP-BY-STEP PHRASES -->
-        <section id="view-phrases" class="tab-view">
+        <!-- VIEW 1: 90-DAY STEP-BY-STEP COURSE (3 MONTHS) -->
+        <section id="view-course" class="tab-view">
+            <!-- Course Month Selector Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6" id="course-month-tabs">
+                <!-- Populated dynamically -->
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Left Column: Days Grid in Active Month -->
+                <div class="lg:col-span-4 bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
+                    <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-600">Daily Curriculum</span>
+                        <span class="text-xs font-medium text-amber-600">30 Days per Month</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 max-h-[640px] overflow-y-auto pr-1" id="course-days-grid">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Right Column: Active Day Interactive Lesson Player -->
+                <div class="lg:col-span-8" id="course-active-lesson">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: STEP-BY-STEP PHRASE LIBRARY -->
+        <section id="view-phrases" class="tab-view hidden">
             <!-- Search & Filter Controls -->
             <div class="flex flex-col sm:flex-row gap-3 items-center justify-between mb-6">
                 <div class="relative w-full sm:w-80">
@@ -132,7 +167,7 @@
             </div>
         </section>
 
-        <!-- VIEW 2: LONG CONVERSATIONS (DIALOGUE LAB) -->
+        <!-- VIEW 3: LONG CONVERSATIONS (DIALOGUE LAB) -->
         <section id="view-conversations" class="tab-view hidden">
             <!-- Conversation Selector Bar -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6" id="conversation-selectors">
@@ -145,7 +180,7 @@
             </div>
         </section>
 
-        <!-- VIEW 3: INTERACTIVE QUIZ & PRACTICE -->
+        <!-- VIEW 4: INTERACTIVE QUIZ & PRACTICE -->
         <section id="view-quiz" class="tab-view hidden">
             <div class="max-w-xl mx-auto">
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8" id="quiz-card-content">
@@ -154,7 +189,7 @@
             </div>
         </section>
 
-        <!-- VIEW 4: ALPHABET & TRANSLITERATION GUIDE -->
+        <!-- VIEW 5: ALPHABET & TRANSLITERATION GUIDE -->
         <section id="view-alphabet" class="tab-view hidden">
             <div class="space-y-8">
                 <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5">
@@ -192,13 +227,14 @@
     <!-- Footer -->
     <footer class="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-400">
         <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p>Built with open Hindi datasets, Google Cloud Native Audio & Web Speech Recognition.</p>
-            <p class="text-slate-500 font-medium">Free & Accessible Everywhere • Works on Desktop & Mobile</p>
+            <p>90-Day Spoken Hindi Course • Powered by Google Cloud Audio & Web Speech Recognition.</p>
+            <p class="text-slate-500 font-medium">Free & Offline-ready • Works on Desktop & Mobile</p>
         </div>
     </footer>
 
     <!-- App Data and Controller Scripts -->
     <script src="data.js"></script>
+    <script src="course_data.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

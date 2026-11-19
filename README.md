@@ -1,49 +1,41 @@
-# Bol Hindi - Interactive Spoken Hindi Learning Lab
+# Bol Hindi - 3-Month Interactive Spoken Hindi Academy
 
-A standalone, local interactive web application to learn spoken Hindi step-by-step with Latin transliteration (Hinglish), native recorded audio, Web Speech synthesis (`hi-IN`), and microphone-based pronunciation evaluation.
-
----
-
-## 🌟 Key Features
-
-1. **Step-by-Step Spoken Hindi Phrases**:
-   - 8 Progressive Levels:
-     - Level 1: Greetings & Politeness (Namaste, Shukriya, Kripya...)
-     - Level 2: Introductions (Aap kaise hain?, Mera naam... hai)
-     - Level 3: Everyday Survival (Haan, Nahin, Theek hai, Chalo chalein...)
-     - Level 4: Numbers & Counting (Ek, Do, Teen, Chaar...)
-     - Level 5: Directions & Help (Bathroom kahan hai?, Mujhe madad chahiye...)
-     - Level 6: Food & Dining (Paani chahiye, Swaadisht hai, Chai milegi?...)
-     - Level 7: Shopping & Travel (Yeh kitne ka hai?, Thoda kam kijiye...)
-     - Level 8: Family & Relations (Mataji, Pitaji, Bhaiya, Didi, Dadaji...)
-     - Bonus: Spoken Colors (Laal, Hara, Peela, Safed, Kaala...)
-
-2. **Dual Audio Playback**:
-   - **Native Spoken Audio**: Pre-bundled high quality `.mp3` audio files for numbers, family members, colors, and key conversational phrases.
-   - **Web Speech API TTS**: Dynamic Hindi pronunciation synthesis (`hi-IN`) with adjustable playback speeds (1.0x Normal, 0.75x Slow, 0.5x Very Slow).
-
-3. **Latin Words & Phonetic Breakdown**:
-   - Every phrase displays the **Devanagari script**, the **Latin transliteration (Hinglish)**, a phonetic pronunciation guide (e.g. `nuh-muh-stay`), and contextual/cultural notes.
-
-4. **Speech-to-Text Pronunciation Checker**:
-   - Click **"🎙️ Speak to Check"**, speak the Hindi phrase into your microphone.
-   - The app evaluates what you said in real-time, displays an accuracy match score (0-100%), and offers feedback.
-
-5. **Interactive Audio Quiz**:
-   - Listen to spoken Hindi and select the matching English meaning.
-   - Tracks your score and marks phrases as mastered.
-
-6. **Devanagari ↔ Latin Alphabet Guide**:
-   - Interactive vowel and consonant chart showing Latin transliteration, English sound equivalents, and clickable audio.
+A standalone, local and hosted web application to learn spoken Hindi day-by-day over 3 months (90 Days / 12 Weeks) with Latin transliteration (Hinglish), native MP3 audio, Google Cloud Hindi stream, and microphone pronunciation checking.
 
 ---
 
-## 🚀 How to Launch Locally
+## 🌟 3-Month Day-by-Day Course Curriculum
+
+### Month 1: Foundations & Spoken Survival (Days 1 to 30)
+- **Week 1 (Days 1–7):** Sacred Namaste, Thank You (Dhanyavaad vs Shukriya), Yes/No (Haanji/Nahin), Theek hai, Morning/Night greetings, and Politeness.
+- **Week 2 (Days 8–14):** Self-introductions, asking names (Aapka naam kya hai?), well-being (Aap kaise hain?), and origins (Aap kahan se hain?).
+- **Week 3 (Days 15–21):** Numbers 1–10, currency numbers (20, 50, 100), comprehension requests (Kripya dheere boliye, Samajh nahi aaya), and "Chalo chalein!".
+- **Week 4 (Days 22–30):** Question words (Kya, Kahan, Kab, Kyon, Kaun), survival needs (Water, Bathroom, Food), today/tomorrow/yesterday, and Month 1 graduation dialogue.
+
+### Month 2: Daily Life, Food & Culture (Days 31 to 60)
+- **Week 5 (Days 31–36):** Chai tapri culture (ordering tea, customizing sugar), restaurant seating, controlling spice levels (Zyada teekha nahi), staples (roti, dal), and asking for the bill.
+- **Week 6 (Days 37–42):** Hailing auto-rickshaws, asking for meters, giving street navigation (Seedhe, Baayein, Daayein), stopping, and bazaar bargaining.
+- **Week 7 (Days 43–49):** Colors (Red, Green, Yellow, White, Black, Blue), family hierarchy (Mataji, Pitaji, Bhaiya, Didi, Dadaji, Nanaji), and friendships.
+- **Week 8 (Days 50–60):** Subject-Object-Verb (SOV) structure, eating/drinking verbs, telling time (Kitne baje hain?), weather, likes/dislikes (Mujhe pasand hai), UPI QR code payments, and Month 2 graduation.
+
+### Month 3: Fluency, Extended Dialogues & Mastery (Days 61 to 90)
+- **Week 9 (Days 61–65):** Past tense (What did you do / Where did you go), future tense (What will you do / I will come), making meetup plans with friends.
+- **Week 10 (Days 66–70):** Health and tiredness, hotel check-ins, asking recommendations, WiFi passwords, and classic slang (Arre yaar!, Wah!).
+- **Week 11 (Days 71–77):** Asking permissions (Can I sit here? Can I take a photo?), gift shopping, agreeing (Bilkul!), connectors (Kyonki), and desires (Main jaana chahta hoon).
+- **Week 12 (Days 78–90):** Indian idioms (Daal mein kuch kaala hai), music & cinema, compliments, rapid-fire comprehensive reviews, and the 90-Day graduation speech!
+
+---
+
+## 🚀 How to Run Locally
 
 Double-click `START_HINDI_APP.bat` or run:
 ```bash
 python server.py
 ```
-This automatically launches your web browser at `http://localhost:8090`.
+This automatically opens `http://localhost:8090` in your web browser.
 
-*Note: Running through `http://localhost` allows your browser (Chrome, Edge) to grant microphone access for speech checking.*
+---
+
+## 🌐 Live Web Deployment
+Live on GitHub Pages:
+👉 **https://pureeye108.github.io/bol-hindi/**
