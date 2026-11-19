@@ -18,6 +18,7 @@ const I18N = {
             subTitle: "90-Day Curriculum • Latin Transliteration • Audio • Pronunciation Checker",
             learnFrom: "Learn in:",
             testSound: "Test Sound",
+            aboutBtn: "About",
             speed: "Speed:",
             normal: "Normal",
             slow: "Slow",
@@ -53,7 +54,13 @@ const I18N = {
             hint: "Hint:",
             selectEnglish: "Select the correct meaning:",
             playAgain: "Play Again",
-            quizCompleted: "Quiz Completed!"
+            quizCompleted: "Quiz Completed!",
+            aboutModalTitle: "About Bol Hindi",
+            aboutDesc: "Bol Hindi is a 100% free, open-source spoken Hindi learning platform. It empowers international travelers, expats, and language lovers to speak Hindi naturally with Latin transliteration, authentic audio, and real-time pronunciation checking.",
+            aboutContactText: "Have feedback, found a mistake, or want to suggest a new feature? Drop me an email:",
+            dropEmailBtn: "✉️ Drop Me an Email",
+            viewGitHubBtn: "⭐ Star on GitHub",
+            closeBtn: "Close"
         },
         vi: {
             title: "Bol Hindi",
@@ -61,6 +68,7 @@ const I18N = {
             subTitle: "Lộ trình 90 Ngày • Phiên âm Latinh • Giọng bản xứ • Chấm điểm phát âm",
             learnFrom: "Học bằng:",
             testSound: "Thử âm thanh",
+            aboutBtn: "Giới thiệu",
             speed: "Tốc độ:",
             normal: "Bình thường",
             slow: "Chậm",
@@ -96,7 +104,13 @@ const I18N = {
             hint: "Gợi ý:",
             selectEnglish: "Chọn đáp án đúng:",
             playAgain: "Luyện tập lại",
-            quizCompleted: "Hoàn thành bài kiểm tra!"
+            quizCompleted: "Hoàn thành bài kiểm tra!",
+            aboutModalTitle: "Về Bol Hindi",
+            aboutDesc: "Bol Hindi là nền tảng luyện nói tiếng Hindi tương tác miễn phí và mã nguồn mở 100%. Giúp người Việt và bạn bè quốc tế tự tin giao tiếp tiếng Hindi thông qua phiên âm chữ Latinh (Hinglish), giọng đọc bản xứ và công nghệ chấm điểm phát âm trực tiếp qua mic.",
+            aboutContactText: "Bạn có góp ý, muốn báo lỗi hoặc muốn kết nối trao đổi? Hãy gửi email cho mình nhé:",
+            dropEmailBtn: "✉️ Gửi Email cho tôi",
+            viewGitHubBtn: "⭐ Xem trên GitHub",
+            closeBtn: "Đóng"
         },
         es: {
             title: "Bol Hindi",
@@ -104,6 +118,7 @@ const I18N = {
             subTitle: "Plan de 90 Días • Transliteración Latina • Audio • Verificador de Voz",
             learnFrom: "Aprender en:",
             testSound: "Probar Sonido",
+            aboutBtn: "Acerca de",
             speed: "Velocidad:",
             normal: "Normal",
             slow: "Lento",
@@ -139,7 +154,13 @@ const I18N = {
             hint: "Pista:",
             selectEnglish: "Selecciona el significado correcto:",
             playAgain: "Jugar de nuevo",
-            quizCompleted: "¡Cuestionario Completado!"
+            quizCompleted: "¡Cuestionario Completado!",
+            aboutModalTitle: "Acerca de Bol Hindi",
+            aboutDesc: "Bol Hindi es una plataforma gratuita de código abierto para aprender hindi hablado. Diseñada con transliteración latina, audio nativo y verificación de pronunciación en tiempo real.",
+            aboutContactText: "¿Tienes comentarios o sugerencias? Envíame un correo:",
+            dropEmailBtn: "✉️ Enviar un correo",
+            viewGitHubBtn: "⭐ Ver en GitHub",
+            closeBtn: "Cerrar"
         },
         fr: {
             title: "Bol Hindi",
@@ -147,6 +168,7 @@ const I18N = {
             subTitle: "Programme de 90 Jours • Transcription Latine • Audio • Correcteur Vocal",
             learnFrom: "Apprendre en :",
             testSound: "Tester le son",
+            aboutBtn: "À propos",
             speed: "Vitesse :",
             normal: "Normal",
             slow: "Lent",
@@ -182,7 +204,13 @@ const I18N = {
             hint: "Indice :",
             selectEnglish: "Choisissez la bonne signification :",
             playAgain: "Rejouer",
-            quizCompleted: "Quiz Terminé !"
+            quizCompleted: "Quiz Terminé !",
+            aboutModalTitle: "À propos de Bol Hindi",
+            aboutDesc: "Bol Hindi est une plateforme open source et gratuite pour apprendre le hindi parlé pas à pas avec translittération latine et correction vocale par microphone.",
+            aboutContactText: "Une question ou une suggestion ? Envoyez-moi un e-mail :",
+            dropEmailBtn: "✉️ M'envoyer un e-mail",
+            viewGitHubBtn: "⭐ Voir sur GitHub",
+            closeBtn: "Fermer"
         },
         ja: {
             title: "Bol Hindi",
@@ -190,6 +218,7 @@ const I18N = {
             subTitle: "90日カリキュラム • ラテン文字表記 • ネイティブ音声 • 発音チェッカー",
             learnFrom: "学習言語:",
             testSound: "音声テスト",
+            aboutBtn: "概要",
             speed: "速度:",
             normal: "通常",
             slow: "ゆっくり",
@@ -225,7 +254,13 @@ const I18N = {
             hint: "ヒント:",
             selectEnglish: "正しい意味を選択してください:",
             playAgain: "もう一度挑戦",
-            quizCompleted: "クイズ完了！"
+            quizCompleted: "クイズ完了！",
+            aboutModalTitle: "Bol Hindi について",
+            aboutDesc: "Bol Hindi は完全無料・オープンソースのヒンディー語会話学習プラットフォームです。ラテン文字（英語表記）と音声マイク判定で誰でも簡単に学べます。",
+            aboutContactText: "ご意見・ご質問はこちらからメールをお送りください：",
+            dropEmailBtn: "✉️ メールで連絡する",
+            viewGitHubBtn: "⭐ GitHub を見る",
+            closeBtn: "閉じる"
         },
         ru: {
             title: "Bol Hindi",
@@ -233,6 +268,7 @@ const I18N = {
             subTitle: "Курс на 90 дней • Латинская транслитерация • Аудио • Проверка речи",
             learnFrom: "Язык обучения:",
             testSound: "Тест звука",
+            aboutBtn: "О проекте",
             speed: "Скорость:",
             normal: "Обычная",
             slow: "Медленно",
@@ -268,11 +304,16 @@ const I18N = {
             hint: "Подсказка:",
             selectEnglish: "Выберите правильное значение:",
             playAgain: "Пройти снова",
-            quizCompleted: "Тест завершен!"
+            quizCompleted: "Тест завершен!",
+            aboutModalTitle: "О проекте Bol Hindi",
+            aboutDesc: "Bol Hindi — это бесплатная открытая платформа для изучения разговорного хинди. С латинской транскрипцией, живым аудио и оценкой речи через микрофон.",
+            aboutContactText: "Есть вопросы или предложения? Напишите мне на почту:",
+            dropEmailBtn: "✉️ Отправить письмо",
+            viewGitHubBtn: "⭐ Репозиторий на GitHub",
+            closeBtn: "Закрыть"
         }
     },
 
-    // Phrase Translations for each target language
     phraseTranslations: {
         vi: {
             "greet-1": "Xin chào / Lời chào tôn kính (Namaste)",
@@ -380,45 +421,21 @@ const I18N = {
             "intro-2": "Mi nombre es ...",
             "intro-3": "¿Cómo estás? (A un hombre)",
             "intro-4": "Estoy bien",
-            "intro-5": "¿Cómo te sientes?",
-            "intro-6": "Me siento muy bien",
             "intro-7": "Mucho gusto en conocerte",
             "intro-8": "¿De dónde eres?",
-            "intro-9": "Soy de ...",
 
             "daily-1": "Sí",
             "daily-2": "No",
             "daily-3": "Está bien / De acuerdo (Theek hai)",
             "daily-4": "¡Vamos! (Chalo chalein)",
-            "daily-5": "Ven aquí",
-            "daily-6": "¿Vienes?",
-            "daily-7": "Sí, ya voy",
-            "daily-8": "¿A dónde vas?",
             "daily-9": "¿Hablas inglés?",
             "daily-10": "No entendí",
             "daily-11": "Por favor, hable más despacio",
 
-            "num-1": "Uno (1 - Ek)",
-            "num-2": "Dos (2 - Do)",
-            "num-3": "Tres (3 - Teen)",
-            "num-4": "Cuatro (4 - Chaar)",
-            "num-5": "Cinco (5 - Paanch)",
-            "num-6": "Seis (6 - Chhah)",
-            "num-7": "Siete (7 - Saat)",
-            "num-8": "Ocho (8 - Aath)",
-            "num-9": "Nueve (9 - Nau)",
-            "num-10": "Diez (10 - Das)",
-            "num-20": "Veinte (20 - Bees)",
-            "num-50": "Cincuenta (50 - Pachaas)",
-            "num-100": "Cien (100 - Sau)",
-
             "dir-1": "Necesito ayuda",
             "dir-2": "¿Dónde está el baño?",
-            "dir-3": "¿Dónde está esto?",
             "dir-4": "Siga recto (Seedhe)",
-            "dir-5": "Gire a la izquierda (Baayein)",
-            "dir-6": "Gire a la derecha (Daayein)",
-            "dir-7": "Pare aquí, por favor (Yahan rukiye)",
+            "dir-7": "Pare aquí, por favor",
 
             "food-1": "Quiero agua (Paani)",
             "food-2": "¡La comida está muy deliciosa!",
@@ -429,9 +446,7 @@ const I18N = {
 
             "shop-1": "¿Cuánto cuesta esto? (Yeh kitne ka hai?)",
             "shop-2": "Esto es muy caro",
-            "shop-3": "¿Puede bajar un poco el precio?",
-            "shop-4": "Me gusta esto",
-            "shop-5": "¿Aceptan tarjeta?"
+            "shop-3": "¿Puede bajar un poco el precio?"
         },
         fr: {
             "greet-1": "Bonjour / Salutations (Namaste)",
@@ -492,7 +507,7 @@ const I18N = {
             "intro-2": "私の名前は…です",
             "intro-3": "お元気ですか？",
             "intro-4": "元気です",
-            "intro-7": "はじめまして / お会いできて嬉しいです",
+            "intro-7": "はじめまして",
             "intro-8": "ご出身はどちらですか？",
 
             "daily-1": "はい",
@@ -565,7 +580,7 @@ const I18N = {
     },
 
     getMeaning(phraseId, defaultEnglish) {
-        const lang = localStorage.getItem('hindi_learner_lang') || 'en';
+        const lang = localStorage.getItem('hindi_learner_lang') || this.detectBrowserLanguage();
         if (lang === 'en') return defaultEnglish;
         const dict = this.phraseTranslations[lang];
         if (dict && dict[phraseId]) return dict[phraseId];
@@ -573,8 +588,18 @@ const I18N = {
     },
 
     t(key) {
-        const lang = localStorage.getItem('hindi_learner_lang') || 'en';
+        const lang = localStorage.getItem('hindi_learner_lang') || this.detectBrowserLanguage();
         const langDict = this.ui[lang] || this.ui['en'];
         return langDict[key] || this.ui['en'][key] || key;
+    },
+
+    detectBrowserLanguage() {
+        const browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+        if (browserLang.startsWith('vi')) return 'vi';
+        if (browserLang.startsWith('es')) return 'es';
+        if (browserLang.startsWith('fr')) return 'fr';
+        if (browserLang.startsWith('ja')) return 'ja';
+        if (browserLang.startsWith('ru')) return 'ru';
+        return 'en';
     }
 };

@@ -67,6 +67,11 @@
                     <span>🔊</span> Test Sound
                 </button>
 
+                <!-- About & Contact Button -->
+                <button id="btn-about" onclick="app.openAboutModal()" title="About & Contact" class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-2xs">
+                    <span>ℹ️</span> About
+                </button>
+
                 <!-- Speed & Engine Dropdown -->
                 <div class="hidden lg:flex items-center gap-3 text-xs text-slate-600 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
                     <div class="flex items-center gap-1.5">
@@ -237,6 +242,52 @@
             <p class="text-slate-500 font-medium">100% Free & Open Source • Desktop & Mobile Ready</p>
         </div>
     </footer>
+
+    <!-- About & Contact Modal -->
+    <div id="about-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative animate-in fade-in zoom-in-95 duration-200">
+            <button onclick="app.closeAboutModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 p-2 rounded-full hover:bg-slate-100 transition-colors" aria-label="Close modal">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-white text-2xl font-bold shadow-md shadow-orange-500/20">
+                    हिं
+                </div>
+                <div>
+                    <h3 id="about-modal-title" class="text-xl font-bold text-slate-900">About Bol Hindi</h3>
+                    <p class="text-xs text-amber-600 font-semibold">100% Free & Open Source Academy</p>
+                </div>
+            </div>
+
+            <p id="about-modal-desc" class="text-sm text-slate-600 leading-relaxed mb-5">
+                Bol Hindi is a 100% free, open-source spoken Hindi learning platform. It empowers international travelers, expats, and language lovers to speak Hindi naturally with Latin transliteration, authentic audio, and real-time pronunciation checking.
+            </p>
+
+            <div class="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-4 mb-6">
+                <p id="about-modal-contact" class="text-xs font-medium text-slate-700 mb-3">
+                    Have feedback, found a mistake, or want to suggest a new feature? Drop me an email:
+                </p>
+                <div class="flex flex-col sm:flex-row gap-2.5">
+                    <a id="btn-drop-email" href="mailto:pureeye108@gmail.com?subject=Bol%20Hindi%20Academy%20Feedback" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-xs transition-all text-center">
+                        ✉️ Drop Me an Email
+                    </a>
+                    <a id="btn-view-github" href="https://github.com/PureEye108/bol-hindi" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-100 text-slate-800 font-bold text-xs py-2.5 px-4 rounded-xl border border-slate-300 shadow-2xs transition-all text-center">
+                        ⭐ Star on GitHub
+                    </a>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-2.5 text-center sm:text-left">
+                    Direct Email: <span class="font-mono text-slate-600 font-medium select-all">pureeye108@gmail.com</span>
+                </p>
+            </div>
+
+            <div class="flex justify-end">
+                <button id="btn-close-about-modal" onclick="app.closeAboutModal()" class="w-full sm:w-auto px-5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-800 hover:bg-slate-100 transition-colors border border-slate-200">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- App Data and Controller Scripts -->
     <script src="i18n.js"></script>

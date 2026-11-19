@@ -1,13 +1,16 @@
 // Spoken Hindi Interactive Learning Application
-// Features: Multi-Language Learning (English, Tiếng Việt, Español, Français, 日本語, Русский),
-// 90-Day Step-by-Step Curriculum Course, Bulletproof Audio Playback, Speech Recognition, Dialogue Lab, Quiz
+// Features: Auto-Detect Browser Language, Multi-Language Learning (English, Tiếng Việt, Español, Français, 日本語, Русский),
+// 90-Day Step-by-Step Curriculum Course, Bulletproof Audio Playback, Speech Recognition, Dialogue Lab, About & Contact Modal
 
 class HindiLearningApp {
     constructor() {
         this.data = HINDI_DATA;
         this.courseData = typeof HINDI_COURSE !== 'undefined' ? HINDI_COURSE : null;
         this.i18n = typeof I18N !== 'undefined' ? I18N : null;
-        this.currentLanguage = localStorage.getItem('hindi_learner_lang') || 'en';
+
+        // Auto-detect browser default language if no preference saved
+        const savedLang = localStorage.getItem('hindi_learner_lang');
+        this.currentLanguage = savedLang ? savedLang : (this.i18n ? this.i18n.detectBrowserLanguage() : 'en');
 
         this.currentCategory = 'all';
         this.currentConversationId = 'conv-chai';
@@ -98,15 +101,34 @@ class HindiLearningApp {
         const tabAlphabet = document.getElementById('tab-btn-alphabet');
         if (tabAlphabet) tabAlphabet.innerHTML = `<span>🔤</span> ${t('tabAlphabet')}`;
 
-        // Top UI labels
+        // Top UI buttons & labels
+        const btnAbout = document.getElementById('btn-about');
+        if (btnAbout) btnAbout.innerHTML = `<span>ℹ️</span> ${t('aboutBtn')}`;
+
         const lblTestSound = document.getElementById('btn-test-sound');
         if (lblTestSound) lblTestSound.innerHTML = `<span>🔊</span> ${t('testSound')}`;
 
-        const lblLearnFrom = document.getElementById('lbl-learn-from');
-        if (lblLearnFrom) lblLearnFrom.textContent = t('learnFrom');
-
         const searchInput = document.getElementById('search-input');
         if (searchInput) searchInput.placeholder = t('searchPlaceholder');
+
+        // Update About Modal Content
+        const modalTitle = document.getElementById('about-modal-title');
+        if (modalTitle) modalTitle.textContent = t('aboutModalTitle');
+
+        const modalDesc = document.getElementById('about-modal-desc');
+        if (modalDesc) modalDesc.textContent = t('aboutDesc');
+
+        const modalContact = document.getElementById('about-modal-contact');
+        if (modalContact) modalContact.textContent = t('aboutContactText');
+
+        const btnDropEmail = document.getElementById('btn-drop-email');
+        if (btnDropEmail) btnDropEmail.textContent = t('dropEmailBtn');
+
+        const btnViewGitHub = document.getElementById('btn-view-github');
+        if (btnViewGitHub) btnViewGitHub.textContent = t('viewGitHubBtn');
+
+        const btnCloseModal = document.getElementById('btn-close-about-modal');
+        if (btnCloseModal) btnCloseModal.textContent = t('closeBtn');
     }
 
     getPhraseMeaning(phrase) {
@@ -115,6 +137,23 @@ class HindiLearningApp {
             return this.i18n.getMeaning(phrase.id, phrase.english);
         }
         return phrase.english;
+    }
+
+    // --- ABOUT & CONTACT MODAL ---
+    openAboutModal() {
+        const modal = document.getElementById('about-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+    }
+
+    closeAboutModal() {
+        const modal = document.getElementById('about-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
     }
 
     // --- BULLETPROOF AUDIO PLAYBACK ---
@@ -568,7 +607,6 @@ class HindiLearningApp {
         const activeLessonContainer = document.getElementById('course-active-lesson');
         if (!monthsContainer || !daysGrid || !activeLessonContainer) return;
 
-        // Render 3 Months Tabs
         monthsContainer.innerHTML = this.courseData.months.map(m => `
             <button onclick="app.selectCourseMonth(${m.month})" class="p-3.5 rounded-2xl font-medium text-left transition-all border flex items-center justify-between ${
                 this.currentCourseMonth === m.month
@@ -587,7 +625,6 @@ class HindiLearningApp {
 
         const filteredDays = this.courseData.days.filter(d => d.month === this.currentCourseMonth);
 
-        // Render Day Cards
         daysGrid.innerHTML = filteredDays.map(d => {
             const isCompleted = (this.userProgress.completedDays || []).includes(d.day);
             const isSelected = this.selectedDayNumber === d.day;
@@ -636,7 +673,6 @@ class HindiLearningApp {
                     </div>
                 </div>
 
-                <!-- Objective and Tip -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
                     <div class="bg-amber-50/60 p-4 rounded-xl border border-amber-100">
                         <div class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-1 flex items-center gap-1.5">
@@ -652,7 +688,6 @@ class HindiLearningApp {
                     </div>
                 </div>
 
-                <!-- Today's Key Phrases -->
                 <div class="my-6">
                     <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">${t('todaysPhrases')}</h4>
                     <div class="space-y-3">
@@ -672,7 +707,6 @@ class HindiLearningApp {
                     </div>
                 </div>
 
-                <!-- Daily Speaking Checkpoint -->
                 <div class="mt-6 p-5 rounded-2xl border ${isDayDone ? 'bg-emerald-50/50 border-emerald-200' : 'bg-orange-50/40 border-orange-200'}">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-xs font-bold uppercase tracking-wider ${isDayDone ? 'text-emerald-800' : 'text-orange-800'}">
@@ -807,7 +841,6 @@ class HindiLearningApp {
                             <span class="text-slate-400">${t('say')}</span> <span class="bg-slate-100 px-2 py-0.5 rounded text-slate-700">${p.phonetic || p.latin}</span>
                         </div>
 
-                        <!-- Localized Meaning -->
                         <div class="mt-3 text-slate-800 font-semibold text-base border-t border-slate-100 pt-2.5">
                             ${localizedMeaning}
                         </div>
@@ -1152,6 +1185,13 @@ class HindiLearningApp {
                 this.playbackSpeed = parseFloat(e.target.value);
             });
         }
+
+        // Close About modal with Escape key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                this.closeAboutModal();
+            }
+        });
     }
 }
 
