@@ -1,18 +1,21 @@
 // Spoken Hindi Interactive Learning Application
-// Features: 90-Day Step-by-Step Curriculum Course, Bulletproof Multi-Layer Audio Playback,
-// Speech Recognition Pronunciation Checker, Long Conversations Dialogue Lab, Quiz & Flashcards
+// Features: Multi-Language Learning (English, Tiếng Việt, Español, Français, 日本語, Русский),
+// 90-Day Step-by-Step Curriculum Course, Bulletproof Audio Playback, Speech Recognition, Dialogue Lab, Quiz
 
 class HindiLearningApp {
     constructor() {
         this.data = HINDI_DATA;
         this.courseData = typeof HINDI_COURSE !== 'undefined' ? HINDI_COURSE : null;
+        this.i18n = typeof I18N !== 'undefined' ? I18N : null;
+        this.currentLanguage = localStorage.getItem('hindi_learner_lang') || 'en';
+
         this.currentCategory = 'all';
         this.currentConversationId = 'conv-chai';
         this.currentCourseMonth = 1;
         this.selectedDayNumber = 1;
         this.searchTerm = '';
         this.playbackSpeed = 1.0;
-        this.currentView = 'course'; // Default to Course tab!
+        this.currentView = 'course'; // Default to Course tab
         this.selectedVoice = null;
         this.recognition = null;
         this.isRecording = false;
@@ -34,6 +37,8 @@ class HindiLearningApp {
     }
 
     init() {
+        this.initLanguageSelector();
+        this.applyLanguageUI();
         this.initVoices();
         this.initSpeechRecognition();
         this.renderCategoryPills();
@@ -45,7 +50,74 @@ class HindiLearningApp {
         this.setupEventListeners();
     }
 
-    // --- BULLETPROOF MULTI-LAYER AUDIO PLAYBACK ---
+    // --- MULTI-LANGUAGE LOCALIZATION (I18N) ---
+    initLanguageSelector() {
+        const langSelect = document.getElementById('learnLanguageSelect');
+        if (!langSelect || !this.i18n) return;
+
+        langSelect.innerHTML = this.i18n.languages.map(l => `
+            <option value="${l.code}" ${this.currentLanguage === l.code ? 'selected' : ''}>
+                ${l.flag} ${l.name}
+            </option>
+        `).join('');
+
+        langSelect.addEventListener('change', (e) => {
+            this.setLanguage(e.target.value);
+        });
+    }
+
+    setLanguage(langCode) {
+        this.currentLanguage = langCode;
+        localStorage.setItem('hindi_learner_lang', langCode);
+        this.applyLanguageUI();
+        this.renderCategoryPills();
+        this.renderPhrases();
+        this.renderConversations();
+        this.renderCourse();
+        if (this.currentView === 'quiz') this.startQuiz();
+        this.showToast(`🌐 Switched language to ${this.i18n.languages.find(l=>l.code===langCode)?.name || langCode}!`);
+    }
+
+    applyLanguageUI() {
+        if (!this.i18n) return;
+        const t = (k) => this.i18n.t(k);
+
+        // Update Nav Tabs
+        const tabCourse = document.getElementById('tab-btn-course');
+        if (tabCourse) tabCourse.innerHTML = `<span>🎓</span> ${t('tabCourse')}`;
+
+        const tabPhrases = document.getElementById('tab-btn-phrases');
+        if (tabPhrases) tabPhrases.innerHTML = `<span>📖</span> ${t('tabPhrases')}`;
+
+        const tabConv = document.getElementById('tab-btn-conversations');
+        if (tabConv) tabConv.innerHTML = `<span>🗣️</span> ${t('tabConversations')}`;
+
+        const tabQuiz = document.getElementById('tab-btn-quiz');
+        if (tabQuiz) tabQuiz.innerHTML = `<span>🎯</span> ${t('tabQuiz')}`;
+
+        const tabAlphabet = document.getElementById('tab-btn-alphabet');
+        if (tabAlphabet) tabAlphabet.innerHTML = `<span>🔤</span> ${t('tabAlphabet')}`;
+
+        // Top UI labels
+        const lblTestSound = document.getElementById('btn-test-sound');
+        if (lblTestSound) lblTestSound.innerHTML = `<span>🔊</span> ${t('testSound')}`;
+
+        const lblLearnFrom = document.getElementById('lbl-learn-from');
+        if (lblLearnFrom) lblLearnFrom.textContent = t('learnFrom');
+
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) searchInput.placeholder = t('searchPlaceholder');
+    }
+
+    getPhraseMeaning(phrase) {
+        if (!phrase) return '';
+        if (this.i18n) {
+            return this.i18n.getMeaning(phrase.id, phrase.english);
+        }
+        return phrase.english;
+    }
+
+    // --- BULLETPROOF AUDIO PLAYBACK ---
     initVoices() {
         if ('speechSynthesis' in window) {
             const populateVoices = () => {
@@ -455,7 +527,7 @@ class HindiLearningApp {
             this.userProgress.completedDays.push(dayNumber);
             this.saveProgress();
             this.renderCourse();
-            this.showToast(`🎉 Day ${dayNumber} Completed! Keep the momentum!`);
+            this.showToast(`🎉 Day ${dayNumber} Completed! Keep going!`);
         }
     }
 
@@ -472,7 +544,6 @@ class HindiLearningApp {
         if (coursePercentEl) coursePercentEl.textContent = `${coursePercent}%`;
         if (courseBarFill) courseBarFill.style.width = `${coursePercent}%`;
 
-        // Phrases Stats
         const masteredCountEl = document.getElementById('stat-mastered-count');
         const totalPhrasesEl = document.getElementById('stat-total-count');
         const percentEl = document.getElementById('stat-percent');
@@ -490,6 +561,7 @@ class HindiLearningApp {
     // --- 90-DAY COURSE ENGINE (3 MONTHS) ---
     renderCourse() {
         if (!this.courseData) return;
+        const t = (k) => this.i18n ? this.i18n.t(k) : k;
 
         const monthsContainer = document.getElementById('course-month-tabs');
         const daysGrid = document.getElementById('course-days-grid');
@@ -513,10 +585,9 @@ class HindiLearningApp {
             </button>
         `).join('');
 
-        // Filter days for the active month
         const filteredDays = this.courseData.days.filter(d => d.month === this.currentCourseMonth);
 
-        // Render Day Cards in Month Grid
+        // Render Day Cards
         daysGrid.innerHTML = filteredDays.map(d => {
             const isCompleted = (this.userProgress.completedDays || []).includes(d.day);
             const isSelected = this.selectedDayNumber === d.day;
@@ -539,13 +610,11 @@ class HindiLearningApp {
             `;
         }).join('');
 
-        // Render Current Active Day Lesson Content
         const currentDayObj = this.courseData.days.find(d => d.day === this.selectedDayNumber) || this.courseData.days[0];
         const isDayDone = (this.userProgress.completedDays || []).includes(currentDayObj.day);
 
         activeLessonContainer.innerHTML = `
             <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
-                <!-- Lesson Header -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
                     <div>
                         <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-600">
@@ -559,25 +628,25 @@ class HindiLearningApp {
 
                     <div class="flex items-center gap-2">
                         <button onclick="app.selectCourseDay(${Math.max(1, currentDayObj.day - 1)})" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors">
-                            ◀ Prev
+                            ${t('prev')}
                         </button>
                         <button onclick="app.selectCourseDay(${Math.min(90, currentDayObj.day + 1)})" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors">
-                            Next ▶
+                            ${t('next')}
                         </button>
                     </div>
                 </div>
 
-                <!-- Today's Learning Objective & Cultural Tip -->
+                <!-- Objective and Tip -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
                     <div class="bg-amber-50/60 p-4 rounded-xl border border-amber-100">
                         <div class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                            <span>🎯</span> Today's Objective
+                            <span>🎯</span> ${t('objective')}
                         </div>
                         <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${currentDayObj.objective}</p>
                     </div>
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <div class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                            <span>💡</span> Cultural / Grammar Secret
+                            <span>💡</span> ${t('culturalTip')}
                         </div>
                         <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${currentDayObj.tip}</p>
                     </div>
@@ -585,18 +654,18 @@ class HindiLearningApp {
 
                 <!-- Today's Key Phrases -->
                 <div class="my-6">
-                    <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">Today's Spoken Phrases</h4>
+                    <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">${t('todaysPhrases')}</h4>
                     <div class="space-y-3">
                         ${currentDayObj.phrases.map((p, idx) => `
                             <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/40 hover:bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all">
                                 <div>
                                     <div class="text-2xl font-bold font-hindi text-slate-900">${p.devanagari}</div>
                                     <div class="text-base font-semibold text-amber-700 mt-0.5">${p.latin}</div>
-                                    <div class="text-xs font-mono text-slate-400 mt-0.5"><span class="text-slate-300">say:</span> ${p.phonetic}</div>
+                                    <div class="text-xs font-mono text-slate-400 mt-0.5"><span class="text-slate-300">${t('say')}</span> ${p.phonetic}</div>
                                     <div class="text-sm font-medium text-slate-700 mt-1">${p.english}</div>
                                 </div>
                                 <button onclick="app.playAudio('${p.devanagari.replace(/'/g, "\\'")}', null, '${p.latin.replace(/'/g, "\\'")}')" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-transform active:scale-95 self-start sm:self-auto">
-                                    <span>🔊</span> Listen
+                                    <span>🔊</span> ${t('listen')}
                                 </button>
                             </div>
                         `).join('')}
@@ -607,7 +676,7 @@ class HindiLearningApp {
                 <div class="mt-6 p-5 rounded-2xl border ${isDayDone ? 'bg-emerald-50/50 border-emerald-200' : 'bg-orange-50/40 border-orange-200'}">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-xs font-bold uppercase tracking-wider ${isDayDone ? 'text-emerald-800' : 'text-orange-800'}">
-                            🎙️ Daily Speaking Challenge
+                            🎙️ ${t('dailyChallenge')}
                         </span>
                         ${isDayDone ? '<span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">Day Mastered ✓</span>' : ''}
                     </div>
@@ -620,21 +689,20 @@ class HindiLearningApp {
                         </div>
                         <div class="flex items-center gap-2">
                             <button onclick="app.playAudio('${currentDayObj.challenge.devanagari.replace(/'/g, "\\'")}', null, '${currentDayObj.challenge.latin.replace(/'/g, "\\'")}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold flex items-center gap-1">
-                                <span>🔊</span> Listen Target
+                                <span>🔊</span> ${t('listen')}
                             </button>
                             <button id="mic-btn-day-challenge-${currentDayObj.day}" onclick="app.startChecking('day-challenge-${currentDayObj.day}', '${currentDayObj.challenge.devanagari.replace(/'/g, "\\'")}', '${currentDayObj.challenge.latin.replace(/'/g, "\\'")}')" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all">
-                                <span>🎙️ Speak to Pass</span>
+                                <span>🎙️ ${t('speakToPass')}</span>
                             </button>
                         </div>
                     </div>
 
                     <div id="eval-result-day-challenge-${currentDayObj.day}" class="hidden"></div>
 
-                    <!-- Manual Complete Toggle -->
                     <div class="mt-4 pt-3 border-t border-slate-200/50 flex items-center justify-between">
                         <span class="text-xs text-slate-500">Practice completed for today?</span>
                         <button onclick="app.markDayCompleted(${currentDayObj.day})" class="px-4 py-2 ${isDayDone ? 'bg-emerald-600' : 'bg-slate-800 hover:bg-slate-900'} text-white rounded-xl text-xs font-bold transition-all shadow-sm">
-                            ${isDayDone ? '✓ Completed (Click to Re-confirm)' : 'Mark Day as Completed'}
+                            ${isDayDone ? t('completedBtn') : t('markCompleted')}
                         </button>
                     </div>
                 </div>
@@ -644,7 +712,6 @@ class HindiLearningApp {
 
     selectCourseMonth(monthNum) {
         this.currentCourseMonth = monthNum;
-        // Pick first day of that month
         if (monthNum === 1) this.selectedDayNumber = 1;
         else if (monthNum === 2) this.selectedDayNumber = 31;
         else if (monthNum === 3) this.selectedDayNumber = 61;
@@ -653,7 +720,6 @@ class HindiLearningApp {
 
     selectCourseDay(dayNum) {
         this.selectedDayNumber = dayNum;
-        // Sync month tab if needed
         if (dayNum <= 30) this.currentCourseMonth = 1;
         else if (dayNum <= 60) this.currentCourseMonth = 2;
         else this.currentCourseMonth = 3;
@@ -690,14 +756,17 @@ class HindiLearningApp {
     renderPhrases() {
         const container = document.getElementById('phrases-grid');
         if (!container) return;
+        const t = (k) => this.i18n ? this.i18n.t(k) : k;
 
         const filtered = this.data.phrases.filter(p => {
             const matchesCat = this.currentCategory === 'all' || p.category === this.currentCategory;
             const term = this.searchTerm.toLowerCase();
+            const meaning = this.getPhraseMeaning(p).toLowerCase();
             const matchesSearch = !term ||
                 p.devanagari.includes(term) ||
                 p.latin.toLowerCase().includes(term) ||
                 p.english.toLowerCase().includes(term) ||
+                meaning.includes(term) ||
                 (p.phonetic && p.phonetic.toLowerCase().includes(term));
             return matchesCat && matchesSearch;
         });
@@ -715,12 +784,13 @@ class HindiLearningApp {
 
         container.innerHTML = filtered.map(p => {
             const isMastered = this.userProgress.mastered.includes(p.id);
+            const localizedMeaning = this.getPhraseMeaning(p);
 
             return `
                 <div id="card-${p.id}" class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative group">
                     ${isMastered ? `
                         <div class="absolute top-4 right-4 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs px-2.5 py-1 rounded-full font-semibold flex items-center gap-1">
-                            <span>✓</span> Mastered
+                            <span>✓</span> ${t('mastered')}
                         </div>
                     ` : ''}
 
@@ -734,12 +804,17 @@ class HindiLearningApp {
                         </div>
 
                         <div class="text-xs font-mono text-slate-500 mt-0.5 flex items-center gap-1">
-                            <span class="text-slate-400">say:</span> <span class="bg-slate-100 px-2 py-0.5 rounded text-slate-700">${p.phonetic || p.latin}</span>
+                            <span class="text-slate-400">${t('say')}</span> <span class="bg-slate-100 px-2 py-0.5 rounded text-slate-700">${p.phonetic || p.latin}</span>
                         </div>
 
-                        <div class="mt-3 text-slate-800 font-medium text-base border-t border-slate-100 pt-2.5">
-                            ${p.english}
+                        <!-- Localized Meaning -->
+                        <div class="mt-3 text-slate-800 font-semibold text-base border-t border-slate-100 pt-2.5">
+                            ${localizedMeaning}
                         </div>
+
+                        ${this.currentLanguage !== 'en' ? `
+                            <div class="text-xs text-slate-400 italic mt-0.5">English: ${p.english}</div>
+                        ` : ''}
 
                         ${p.notes ? `
                             <p class="text-xs text-slate-500 mt-1.5 leading-relaxed bg-amber-50/50 p-2 rounded-lg border border-amber-100/60">
@@ -751,15 +826,15 @@ class HindiLearningApp {
                     <div class="mt-4 pt-3 border-t border-slate-100 flex flex-col gap-2">
                         <div class="flex items-center gap-2">
                             <button onclick="app.playPhraseAudio('${p.id}')" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-3 rounded-xl text-sm flex items-center justify-center gap-1.5 transition-colors shadow-sm">
-                                <span>🔊</span> Listen
+                                <span>🔊</span> ${t('listen')}
                             </button>
                             <button onclick="app.playPhraseAudio('${p.id}', true)" title="Listen Slow" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2 px-2.5 rounded-xl text-xs flex items-center justify-center transition-colors">
-                                🐢 Slow
+                                🐢 ${t('slowAudio')}
                             </button>
                         </div>
 
                         <button id="mic-btn-${p.id}" onclick="app.startChecking('${p.id}')" class="w-full bg-slate-50 hover:bg-slate-100 text-slate-800 font-medium py-2 px-3 rounded-xl text-sm border border-slate-200 flex items-center justify-center gap-1.5 transition-all">
-                            <span>🎙️ Speak to Check</span>
+                            <span>🎙️ ${t('speakToCheck')}</span>
                         </button>
 
                         <div id="eval-result-${p.id}" class="hidden"></div>
@@ -774,6 +849,7 @@ class HindiLearningApp {
         const selectorContainer = document.getElementById('conversation-selectors');
         const contentContainer = document.getElementById('conversation-content');
         if (!selectorContainer || !contentContainer) return;
+        const t = (k) => this.i18n ? this.i18n.t(k) : k;
 
         selectorContainer.innerHTML = this.data.conversations.map(c => `
             <button onclick="app.selectConversation('${c.id}')" class="px-4 py-2.5 rounded-xl font-medium text-sm transition-all text-left flex items-center gap-3 border ${
@@ -804,7 +880,7 @@ class HindiLearningApp {
                     </div>
 
                     <button id="btn-autoplay-conv" onclick="app.autoplayConversation('${activeConv.id}')" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm transition-transform active:scale-95 whitespace-nowrap self-start sm:self-auto">
-                        <span>▶️</span> Listen Full Conversation
+                        <span>▶️</span> ${t('listenFullConv')}
                     </button>
                 </div>
 
@@ -823,10 +899,10 @@ class HindiLearningApp {
                                     </div>
                                     <div class="flex items-center gap-1.5">
                                         <button onclick="app.playAudio('${d.devanagari.replace(/'/g, "\\'")}', null, '${d.latin.replace(/'/g, "\\'")}')" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors">
-                                            <span>🔊</span> Listen
+                                            <span>🔊</span> ${t('listen')}
                                         </button>
                                         <button id="mic-btn-${lineId}" onclick="app.startChecking('${lineId}', '${d.devanagari.replace(/'/g, "\\'")}', '${d.latin.replace(/'/g, "\\'")}')" class="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-lg text-xs font-medium flex items-center gap-1 transition-all">
-                                            <span>🎙️</span> Practice
+                                            <span>🎙️</span> ${t('practiceLine')}
                                         </button>
                                     </div>
                                 </div>
@@ -840,7 +916,7 @@ class HindiLearningApp {
                                 </div>
 
                                 <div class="text-xs font-mono text-slate-500 mt-0.5">
-                                    <span class="text-slate-400">say:</span> ${d.phonetic}
+                                    <span class="text-slate-400">${t('say')}</span> ${d.phonetic}
                                 </div>
 
                                 <div class="text-sm font-medium text-slate-700 mt-2 pt-2 border-t border-slate-200/50">
@@ -864,17 +940,18 @@ class HindiLearningApp {
     async autoplayConversation(convId) {
         const conv = this.data.conversations.find(c => c.id === convId);
         if (!conv) return;
+        const t = (k) => this.i18n ? this.i18n.t(k) : k;
 
         const btn = document.getElementById('btn-autoplay-conv');
         if (this.isAutoplaying) {
             this.isAutoplaying = false;
             this.stopCurrentAudio();
-            if (btn) btn.innerHTML = `<span>▶️</span> Listen Full Conversation`;
+            if (btn) btn.innerHTML = `<span>▶️</span> ${t('listenFullConv')}`;
             return;
         }
 
         this.isAutoplaying = true;
-        if (btn) btn.innerHTML = `<span class="animate-spin">⏸️</span> Stop Audio`;
+        if (btn) btn.innerHTML = `<span class="animate-spin">⏸️</span> ${t('stopAudio')}`;
 
         for (let i = 0; i < conv.dialogues.length; i++) {
             if (!this.isAutoplaying) break;
@@ -895,7 +972,7 @@ class HindiLearningApp {
         }
 
         this.isAutoplaying = false;
-        if (btn) btn.innerHTML = `<span>▶️</span> Listen Full Conversation`;
+        if (btn) btn.innerHTML = `<span>▶️</span> ${t('listenFullConv')}`;
         document.querySelectorAll('#dialogue-lines-list > div').forEach(el => el.classList.remove('ring-2', 'ring-amber-500'));
     }
 
@@ -949,6 +1026,7 @@ class HindiLearningApp {
     renderQuizQuestion() {
         const quizCard = document.getElementById('quiz-card-content');
         if (!quizCard) return;
+        const t = (k) => this.i18n ? this.i18n.t(k) : k;
 
         const { currentIndex, questions, score } = this.quizState;
 
@@ -956,11 +1034,11 @@ class HindiLearningApp {
             quizCard.innerHTML = `
                 <div class="text-center py-8">
                     <div class="text-5xl mb-3">🏆</div>
-                    <h3 class="text-2xl font-extrabold text-slate-900">Quiz Completed!</h3>
+                    <h3 class="text-2xl font-extrabold text-slate-900">${t('quizCompleted')}</h3>
                     <p class="text-slate-600 mt-2">You scored <strong class="text-amber-600 text-xl">${score} / ${questions.length}</strong> (${Math.round((score / questions.length) * 100)}%)</p>
                     <div class="mt-6 flex justify-center gap-3">
                         <button onclick="app.startQuiz('listen')" class="bg-amber-600 hover:bg-amber-700 text-white font-medium px-5 py-2.5 rounded-xl shadow">
-                            Play Again
+                            ${t('playAgain')}
                         </button>
                     </div>
                 </div>
@@ -979,18 +1057,18 @@ class HindiLearningApp {
             <div class="text-center p-6 bg-amber-50/60 border border-amber-100 rounded-2xl mb-6">
                 <p class="text-sm text-slate-500 mb-2">Listen to the spoken Hindi phrase:</p>
                 <button onclick="app.playAudio('${q.target.devanagari}', '${q.target.audioFile || ''}', '${q.target.latin}')" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-xl font-bold text-base shadow-md transition-transform active:scale-95">
-                    <span>🔊</span> Play Audio
+                    <span>🔊</span> ${t('listen')}
                 </button>
                 <div class="mt-3 text-xs text-slate-500">
-                    Hint: <span class="font-hindi text-base text-slate-700 font-bold">${q.target.devanagari}</span> (${q.target.latin})
+                    ${t('hint')} <span class="font-hindi text-base text-slate-700 font-bold">${q.target.devanagari}</span> (${q.target.latin})
                 </div>
             </div>
 
-            <p class="text-sm font-semibold text-slate-700 mb-3">Select the correct English meaning:</p>
+            <p class="text-sm font-semibold text-slate-700 mb-3">${t('selectEnglish')}</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="quiz-options">
                 ${q.options.map((opt, i) => `
                     <button onclick="app.handleQuizAnswer('${opt.id}', '${q.target.id}', this)" class="p-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-left font-medium text-slate-800 transition-all flex items-center justify-between">
-                        <span>${opt.english}</span>
+                        <span>${this.getPhraseMeaning(opt)}</span>
                         <span class="text-slate-300 text-xs font-mono">${String.fromCharCode(65 + i)}</span>
                     </button>
                 `).join('')}
@@ -1015,8 +1093,10 @@ class HindiLearningApp {
             btnEl.classList.remove('bg-white', 'border-slate-200');
             btnEl.classList.add('bg-red-50', 'border-red-400', 'text-red-800');
             this.playFeedbackTone(false);
+            const targetPhrase = this.data.phrases.find(p => p.id === targetId);
+            const targetMeaning = this.getPhraseMeaning(targetPhrase);
             buttons.forEach(b => {
-                if (b.innerText.includes(this.data.phrases.find(p => p.id === targetId).english)) {
+                if (b.innerText.includes(targetMeaning)) {
                     b.classList.add('bg-emerald-50', 'border-emerald-400', 'text-emerald-800');
                 }
             });
