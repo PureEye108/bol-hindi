@@ -19,7 +19,7 @@ A standalone, local interactive web application to learn spoken Hindi step-by-st
      - Bonus: Spoken Colors (Laal, Hara, Peela, Safed, Kaala...)
 
 2. **Dual Audio Playback**:
-   - **Native Spoken Audio**: Pre-bundled high quality `.wav` audio files for numbers, family members, colors, and key conversational phrases.
+   - **Native Spoken Audio**: Pre-bundled high quality `.mp3` audio files for numbers, family members, colors, and key conversational phrases.
    - **Web Speech API TTS**: Dynamic Hindi pronunciation synthesis (`hi-IN`) with adjustable playback speeds (1.0x Normal, 0.75x Slow, 0.5x Very Slow).
 
 3. **Latin Words & Phonetic Breakdown**:

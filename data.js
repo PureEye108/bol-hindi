@@ -173,7 +173,7 @@ const HINDI_DATA = {
             phonetic: "aap-kaa naam kyah hai",
             english: "What is your name? (Polite)",
             notes: "'Aapka' is the polite respectful form of 'your'.",
-            audioFile: "audio/phrases_2.wav"
+            audioFile: "audio/phrases_2.mp3"
         },
         {
             id: "intro-2",
@@ -213,7 +213,7 @@ const HINDI_DATA = {
             phonetic: "aap kye-saa meh-soos kur rah-hay hain",
             english: "How are you feeling?",
             notes: "Inquiring about someone's health or emotional state.",
-            audioFile: "audio/phrases_3.wav"
+            audioFile: "audio/phrases_3.mp3"
         },
         {
             id: "intro-6",
@@ -223,7 +223,7 @@ const HINDI_DATA = {
             phonetic: "main uch-haa meh-soos kur ruh-haa hoon",
             english: "I am feeling good (Male speaker)",
             notes: "Females say 'kar rahi hoon' instead of 'kar raha hoon'.",
-            audioFile: "audio/phrases_4.wav"
+            audioFile: "audio/phrases_4.mp3"
         },
         {
             id: "intro-7",
@@ -295,7 +295,7 @@ const HINDI_DATA = {
             phonetic: "chuh-lo chuh-lay",
             english: "Let's go",
             notes: "Encouraging a companion to move.",
-            audioFile: "audio/phrases_7.wav"
+            audioFile: "audio/phrases_7.mp3"
         },
         {
             id: "daily-5",
@@ -305,7 +305,7 @@ const HINDI_DATA = {
             phonetic: "yuh-haan aa-oh",
             english: "Come here",
             notes: "Polite version is 'Yahan aaiye'.",
-            audioFile: "audio/phrases_8.wav"
+            audioFile: "audio/phrases_8.mp3"
         },
         {
             id: "daily-6",
@@ -315,7 +315,7 @@ const HINDI_DATA = {
             phonetic: "kyah aap aa ruh-hay hain",
             english: "Are you coming?",
             notes: "Useful question when planning a meetup.",
-            audioFile: "audio/phrases_5.wav"
+            audioFile: "audio/phrases_5.mp3"
         },
         {
             id: "daily-7",
@@ -325,7 +325,7 @@ const HINDI_DATA = {
             phonetic: "haan main aa ruh-haa hoon",
             english: "Yes, I am coming",
             notes: "Female speaker says 'Haan, main aa rahi hoon'.",
-            audioFile: "audio/phrases_6.wav"
+            audioFile: "audio/phrases_6.mp3"
         },
         {
             id: "daily-8",
@@ -335,7 +335,7 @@ const HINDI_DATA = {
             phonetic: "aap kuh-haan jaa ruh-hay hain",
             english: "Where are you going?",
             notes: "Very common daily question.",
-            audioFile: "audio/phrases_1.wav"
+            audioFile: "audio/phrases_1.mp3"
         },
         {
             id: "daily-9",
@@ -377,7 +377,7 @@ const HINDI_DATA = {
             phonetic: "ay-k",
             english: "One (1)",
             notes: "Number 1 in Hindi.",
-            audioFile: "audio/number_one.wav"
+            audioFile: "audio/number_one.mp3"
         },
         {
             id: "num-2",
@@ -387,7 +387,7 @@ const HINDI_DATA = {
             phonetic: "doh",
             english: "Two (2)",
             notes: "Number 2 in Hindi.",
-            audioFile: "audio/number_two.wav"
+            audioFile: "audio/number_two.mp3"
         },
         {
             id: "num-3",
@@ -397,7 +397,7 @@ const HINDI_DATA = {
             phonetic: "teen",
             english: "Three (3)",
             notes: "Number 3 in Hindi.",
-            audioFile: "audio/number_three.wav"
+            audioFile: "audio/number_three.mp3"
         },
         {
             id: "num-4",
@@ -407,7 +407,7 @@ const HINDI_DATA = {
             phonetic: "chaar",
             english: "Four (4)",
             notes: "Number 4 in Hindi.",
-            audioFile: "audio/number_four.wav"
+            audioFile: "audio/number_four.mp3"
         },
         {
             id: "num-5",
@@ -417,7 +417,7 @@ const HINDI_DATA = {
             phonetic: "paanch",
             english: "Five (5)",
             notes: "Number 5 in Hindi.",
-            audioFile: "audio/number_five.wav"
+            audioFile: "audio/number_five.mp3"
         },
         {
             id: "num-6",
@@ -427,7 +427,7 @@ const HINDI_DATA = {
             phonetic: "chhah",
             english: "Six (6)",
             notes: "Number 6 in Hindi.",
-            audioFile: "audio/number_six.wav"
+            audioFile: "audio/number_six.mp3"
         },
         {
             id: "num-7",
@@ -437,7 +437,7 @@ const HINDI_DATA = {
             phonetic: "saat",
             english: "Seven (7)",
             notes: "Number 7 in Hindi.",
-            audioFile: "audio/number_seven.wav"
+            audioFile: "audio/number_seven.mp3"
         },
         {
             id: "num-8",
@@ -447,7 +447,7 @@ const HINDI_DATA = {
             phonetic: "aath",
             english: "Eight (8)",
             notes: "Number 8 in Hindi.",
-            audioFile: "audio/number_eight.wav"
+            audioFile: "audio/number_eight.mp3"
         },
         {
             id: "num-9",
@@ -457,7 +457,7 @@ const HINDI_DATA = {
             phonetic: "now",
             english: "Nine (9)",
             notes: "Number 9 in Hindi.",
-            audioFile: "audio/number_nine.wav"
+            audioFile: "audio/number_nine.mp3"
         },
         {
             id: "num-10",
@@ -467,7 +467,7 @@ const HINDI_DATA = {
             phonetic: "dus",
             english: "Ten (10)",
             notes: "Number 10 in Hindi.",
-            audioFile: "audio/number_ten.wav"
+            audioFile: "audio/number_ten.mp3"
         },
         {
             id: "num-20",
@@ -695,7 +695,7 @@ const HINDI_DATA = {
             phonetic: "pee-taa-jee",
             english: "Father",
             notes: "Adding 'ji' conveys honor and deep respect.",
-            audioFile: "audio/family_father.wav"
+            audioFile: "audio/family_father.mp3"
         },
         {
             id: "fam-mother",
@@ -705,7 +705,7 @@ const HINDI_DATA = {
             phonetic: "maa-taa-jee",
             english: "Mother",
             notes: "Respectful term for mother.",
-            audioFile: "audio/family_mother.wav"
+            audioFile: "audio/family_mother.mp3"
         },
         {
             id: "fam-older-brother",
@@ -715,7 +715,7 @@ const HINDI_DATA = {
             phonetic: "buh-daa bhaa-ee",
             english: "Older brother",
             notes: "Older brother is often called 'Bhaiya'.",
-            audioFile: "audio/family_elderbrother.wav"
+            audioFile: "audio/family_elderbrother.mp3"
         },
         {
             id: "fam-young-brother",
@@ -725,7 +725,7 @@ const HINDI_DATA = {
             phonetic: "chho-taa bhaa-ee",
             english: "Younger brother",
             notes: "Younger brother in the family.",
-            audioFile: "audio/family_youngbrother.wav"
+            audioFile: "audio/family_youngbrother.mp3"
         },
         {
             id: "fam-older-sister",
@@ -735,7 +735,7 @@ const HINDI_DATA = {
             phonetic: "buh-dee beh-hun",
             english: "Older sister",
             notes: "Older sister is affectionately addressed as 'Didi'.",
-            audioFile: "audio/family_eldersister.wav"
+            audioFile: "audio/family_eldersister.mp3"
         },
         {
             id: "fam-young-sister",
@@ -745,7 +745,7 @@ const HINDI_DATA = {
             phonetic: "chho-tee beh-hun",
             english: "Younger sister",
             notes: "Younger sister.",
-            audioFile: "audio/family_youngersister.wav"
+            audioFile: "audio/family_youngersister.mp3"
         },
         {
             id: "fam-grandfather-paternal",
@@ -755,7 +755,7 @@ const HINDI_DATA = {
             phonetic: "daa-daa-jee",
             english: "Grandfather (Paternal / Father's father)",
             notes: "Hindi has distinct words for maternal and paternal relatives.",
-            audioFile: "audio/family_dada.wav"
+            audioFile: "audio/family_dada.mp3"
         },
         {
             id: "fam-grandmother-paternal",
@@ -765,7 +765,7 @@ const HINDI_DATA = {
             phonetic: "daa-dee-jee",
             english: "Grandmother (Paternal / Father's mother)",
             notes: "Paternal grandmother.",
-            audioFile: "audio/family_dadi.wav"
+            audioFile: "audio/family_dadi.mp3"
         },
         {
             id: "fam-grandfather-maternal",
@@ -775,7 +775,7 @@ const HINDI_DATA = {
             phonetic: "naa-naa-jee",
             english: "Grandfather (Maternal / Mother's father)",
             notes: "Maternal grandfather.",
-            audioFile: "audio/family_nana.wav"
+            audioFile: "audio/family_nana.mp3"
         },
         {
             id: "fam-grandmother-maternal",
@@ -785,7 +785,7 @@ const HINDI_DATA = {
             phonetic: "naa-nee-jee",
             english: "Grandmother (Maternal / Mother's mother)",
             notes: "Maternal grandmother.",
-            audioFile: "audio/family_nani.wav"
+            audioFile: "audio/family_nani.mp3"
         },
         {
             id: "fam-son",
@@ -795,7 +795,7 @@ const HINDI_DATA = {
             phonetic: "bay-taa",
             english: "Son",
             notes: "Son / also an affectionate address for younger male.",
-            audioFile: "audio/family_son.wav"
+            audioFile: "audio/family_son.mp3"
         },
         {
             id: "fam-daughter",
@@ -805,7 +805,7 @@ const HINDI_DATA = {
             phonetic: "bay-tee",
             english: "Daughter",
             notes: "Daughter / affectionate address for younger female.",
-            audioFile: "audio/family_daughter.wav"
+            audioFile: "audio/family_daughter.mp3"
         },
 
         // --- BONUS: COLORS ---
@@ -817,7 +817,7 @@ const HINDI_DATA = {
             phonetic: "laal",
             english: "Red",
             notes: "Color red.",
-            audioFile: "audio/color_red.wav"
+            audioFile: "audio/color_red.mp3"
         },
         {
             id: "col-green",
@@ -827,7 +827,7 @@ const HINDI_DATA = {
             phonetic: "huh-raa",
             english: "Green",
             notes: "Color green.",
-            audioFile: "audio/color_green.wav"
+            audioFile: "audio/color_green.mp3"
         },
         {
             id: "col-yellow",
@@ -837,7 +837,7 @@ const HINDI_DATA = {
             phonetic: "pee-laa",
             english: "Yellow",
             notes: "Color yellow.",
-            audioFile: "audio/color_yellow.wav"
+            audioFile: "audio/color_yellow.mp3"
         },
         {
             id: "col-white",
@@ -847,7 +847,7 @@ const HINDI_DATA = {
             phonetic: "suh-fayd",
             english: "White",
             notes: "Color white.",
-            audioFile: "audio/color_white.wav"
+            audioFile: "audio/color_white.mp3"
         },
         {
             id: "col-black",
@@ -857,7 +857,7 @@ const HINDI_DATA = {
             phonetic: "kaa-laa",
             english: "Black",
             notes: "Color black.",
-            audioFile: "audio/color_black.wav"
+            audioFile: "audio/color_black.mp3"
         },
         {
             id: "col-brown",
@@ -867,7 +867,7 @@ const HINDI_DATA = {
             phonetic: "bhoo-raa",
             english: "Brown",
             notes: "Color brown.",
-            audioFile: "audio/color_brown.wav"
+            audioFile: "audio/color_brown.mp3"
         },
         {
             id: "col-gray",
@@ -877,7 +877,7 @@ const HINDI_DATA = {
             phonetic: "slay-tee",
             english: "Gray",
             notes: "Color gray.",
-            audioFile: "audio/color_gray.wav"
+            audioFile: "audio/color_gray.mp3"
         }
     ],
 
